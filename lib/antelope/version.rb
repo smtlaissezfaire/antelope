@@ -1,4 +1,4 @@
-module PrototypeProject
+module Antelope
   module Version
     class << self
       def string

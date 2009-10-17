@@ -1,6 +1,6 @@
 require "using"
 
-module PrototypeProject
+module Antelope
   extend Using
   
   using :Version
