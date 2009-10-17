@@ -3,5 +3,6 @@ module Antelope
     extend Using
     
     using :Grammar
+    using :Rule
   end
 end

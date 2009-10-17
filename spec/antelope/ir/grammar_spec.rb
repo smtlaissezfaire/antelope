@@ -23,6 +23,22 @@ module Antelope
         end
       end
       
+      describe "rules" do
+        before do
+          @grammar = Grammar.new
+          @rule    = Rule.new
+        end
+        
+        it "should have none initially" do
+          @grammar.rules.should == []
+        end
+        
+        it "should be able to add a rule" do
+          @grammar.rules << @rule
+          @grammar.rules.should == [@rule]
+        end
+      end
+      
       describe "compilable?" do
         before do
           @grammar = Grammar.new

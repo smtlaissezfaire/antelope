@@ -10,6 +10,10 @@ module Antelope
       def compilable?
         start_symbol ? true : false
       end
+      
+      def rules
+        @rules ||= []
+      end
     end
   end
 end
