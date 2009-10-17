@@ -4,5 +4,6 @@ module Antelope
     
     using :Grammar
     using :Rule
+    using :Alternation
   end
 end
