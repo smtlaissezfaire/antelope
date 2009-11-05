@@ -5,5 +5,6 @@ module Antelope
     using :Grammar
     using :Rule
     using :Alternation
+    using :Literal
   end
 end
