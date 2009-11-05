@@ -6,5 +6,6 @@ module Antelope
     using :Rule
     using :Alternation
     using :Literal
+    using :Regex
   end
 end
