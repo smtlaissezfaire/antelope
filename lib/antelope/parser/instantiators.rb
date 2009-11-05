@@ -33,7 +33,16 @@ module Antelope
         def eval
           rule = IR::Rule.new
           rule.name = rule_name.text_value
+          rule.productions = [literal.eval]
           rule
+        end
+      end
+      
+      class Literal < Base
+        def eval
+          lit = IR::Literal.new
+          lit.text = text.text_value
+          lit
         end
       end
     end

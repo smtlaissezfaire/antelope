@@ -85,6 +85,57 @@ module Antelope
         rule = grammar.rules.first
         rule.name.should == "bar"
       end
+      
+      it "should allow any literal inside single quotes" do 
+        @parser.parse("grammar Foo\nbar->'foo'").should_not be_nil
+      end
+      
+      it "should allow a literal to be a string quoted with double quote" do
+        @parser.parse("grammar Foo\nbar->\"foo\"").should_not be_nil
+      end
+      
+      it "should allow any double quoted literal" do
+        @parser.parse("grammar Foo\nbar->\"baradsfad adfa d\"").should_not be_nil
+        @parser.parse("grammar Foo\nbar->\"\"").should_not be_nil
+      end
+      
+      it "should create a rule with a production" do
+        grammar = @parser.parse("grammar Foo\nbar->'baz'").eval
+        rule    = grammar.rules.first
+        rule.productions.size.should == 1
+      end
+      
+      it "should have the production as a literal" do
+        grammar    = @parser.parse("grammar Foo\nbar->'baz'").eval
+        rule       = grammar.rules.first
+        production = rule.productions.first
+        
+        production.should be_a_kind_of(IR::Literal)
+      end
+      
+      it "should use the text in the literal" do
+        grammar = @parser.parse("grammar Foo\nbar->'foo'").eval
+        rule    = grammar.rules.first
+        literal = rule.productions.first
+        
+        literal.text.should == "foo"
+      end
+      
+      it "should use the correct text" do
+        grammar = @parser.parse("grammar Foo\nbar->'bar'").eval
+        rule    = grammar.rules.first
+        literal = rule.productions.first
+        
+        literal.text.should == "bar"
+      end
+      
+      it "should use the text in the literal for a double quoted literal" do
+        grammar = @parser.parse("grammar Foo\nbar->\"foo\"").eval
+        rule    = grammar.rules.first
+        literal = rule.productions.first
+        
+        literal.text.should == "foo"
+      end
     end
   end
 end

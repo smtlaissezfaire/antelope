@@ -14,7 +14,27 @@ module Antelope
       end
       
       rule grammar_rule
-        SP+ rule_name:ID SP* "->" SP* "''" <Instantiators::Rule>
+        SP+ rule_name:ID SP* "->" SP* literal <Instantiators::Rule>
+      end
+      
+      rule literal
+        single_quoted_literal / double_quoted_literal
+      end
+      
+      rule single_quoted_literal
+        SINGLE_QUOTE text:((!SINGLE_QUOTE .)*) SINGLE_QUOTE <Instantiators::Literal>
+      end
+      
+      rule double_quoted_literal
+        DOUBLE_QUOTE text:((!DOUBLE_QUOTE .)*) DOUBLE_QUOTE <Instantiators::Literal>
+      end
+      
+      rule SINGLE_QUOTE
+        "'"
+      end
+      
+      rule DOUBLE_QUOTE
+        '"'
       end
       
       rule GRAMMAR_KEYWORD
