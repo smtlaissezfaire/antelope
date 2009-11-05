@@ -13,11 +13,6 @@ module Antelope
         @rule.name.should equal(:foo)
       end
       
-      it "should symbolize the name" do
-        @rule.name = "foo"
-        @rule.name.should equal(:foo)
-      end
-      
       it "should belong to a grammar" do
         @rule.grammar = @grammar
         @rule.grammar.should equal(@grammar)

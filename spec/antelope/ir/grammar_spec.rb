@@ -16,11 +16,6 @@ module Antelope
           @grammar.start_symbol = :foo
           @grammar.start_symbol.should equal(:foo)
         end
-        
-        it "should convert a stringified start symbol to a symbol" do
-          @grammar.start_symbol = "foo"
-          @grammar.start_symbol.should equal(:foo)
-        end
       end
       
       describe "rules" do

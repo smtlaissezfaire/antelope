@@ -1,21 +1,16 @@
 module Antelope
   module IR
     class Grammar
-      attr_reader :start_symbol
-      
-      def start_symbol=(sym_or_string)
-        @start_symbol = sym_or_string.respond_to?(:to_sym) ? sym_or_string.to_sym : sym_or_string
+      def initialize
+        @rules = []
       end
-      
+
+      attr_accessor :start_symbol
+      attr_accessor :rules
+
       def compilable?
         start_symbol && start_symbol_valid? && rules.any?
       end
-      
-      def rules
-        @rules ||= []
-      end
-      
-      attr_writer :rules
       
     private
     
