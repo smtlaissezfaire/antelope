@@ -5,6 +5,7 @@ module Antelope
         @rules = []
       end
 
+      attr_accessor :name
       attr_accessor :start_symbol
       attr_accessor :rules
 

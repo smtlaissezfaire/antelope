@@ -1,0 +1,33 @@
+module Antelope
+  module Parser
+    grammar Grammar
+      rule grammar
+        grammar_name grammar_rules <Instantiators::Grammar>
+      end
+      
+      rule grammar_name
+        GRAMMAR_KEYWORD SP grammar_identifier:ID <Instantiators::GrammarName>
+      end
+      
+      rule grammar_rules
+        grammar_rule* <Instantiators::Rules>
+      end
+      
+      rule grammar_rule
+        SP+ rule_name:ID SP* "->" SP* "''" <Instantiators::Rule>
+      end
+      
+      rule GRAMMAR_KEYWORD
+        "grammar"
+      end
+      
+      rule SP
+        [ \n]
+      end
+      
+      rule ID
+        [A-Za-z\_]+
+      end
+    end
+  end
+end

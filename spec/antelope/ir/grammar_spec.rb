@@ -3,6 +3,12 @@ require "spec_helper"
 module Antelope
   module IR
     describe Grammar do
+      it "should have a name" do
+        g = Grammar.new
+        g.name = "foo"
+        g.name.should == "foo"
+      end
+      
       describe "start symbol" do
         before do
           @grammar = Grammar.new
