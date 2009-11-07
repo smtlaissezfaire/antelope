@@ -54,6 +54,10 @@ module Antelope
         it "should allow multiple newlines between a definition" do
           @parser.parse("grammar Foo\n\n\nfoo->''").should_not be_nil
         end
+
+        it "should not parse a rule directly after the grammar with no whitespace" do
+          @parser.parse("grammar Foofoo->''").should be_nil
+        end
       end
 
       describe "rule names, rules" do
@@ -68,8 +72,13 @@ module Antelope
         end
 
         it "should set two rules when two are given" do
-          grammar = @parser.parse("grammar Foo\nfoo->''\nfoo->''").eval
+          grammar = @parser.parse("grammar Foo\nfoo->''\nbar->''").eval
           grammar.rules.size.should == 2
+        end
+
+        it "should set three rules when three are given" do
+          grammar = @parser.parse("grammar Foo\nfoo->''\nbar->''\nbaz->''").eval
+          grammar.rules.size.should == 3
         end
 
         it "should have a rule as a Rule object" do

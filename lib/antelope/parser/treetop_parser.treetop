@@ -4,15 +4,19 @@ module Antelope
       include Rules
 
       rule grammar
-        grammar_name grammar_rules <Instantiators::Grammar>
+        grammar_name zero_or_more_grammar_rules <Instantiators::Grammar>
       end
 
       rule grammar_name
         GRAMMAR_KEYWORD SP grammar_identifier:ID <Instantiators::GrammarName>
       end
 
+      rule zero_or_more_grammar_rules
+        SP+ grammar_rules <Instantiators::OneOrMoreGrammarRules> / '' <Instantiators::EmptyGrammarRuleList>
+      end
+
       rule grammar_rules
-        grammar_rule* <Instantiators::Rules>
+        head:grammar_rule tail:(SP+ grammar_rules)* <Instantiators::MultipleRules>
       end
     end
   end

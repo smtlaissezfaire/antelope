@@ -9,8 +9,8 @@ module Antelope
       class Grammar < Base
         def eval
           grammar = IR::Grammar.new
-          grammar.name = grammar_name.eval
-          grammar.rules = grammar_rules.eval
+          grammar.name  = grammar_name.eval
+          grammar.rules = zero_or_more_grammar_rules.eval
           grammar
         end
       end
@@ -21,10 +21,35 @@ module Antelope
         end
       end
 
-      class Rules < Base
+      class EmptyGrammarRuleList < Base
         def eval
-          elements.map do |e|
-            e.eval
+          []
+        end
+      end
+
+      class OneOrMoreGrammarRules < Base
+        def eval
+          grammar_rules.eval
+        end
+      end
+
+      module MultipleRules
+        def eval
+          car + cdr
+        end
+
+        def car
+          [head.eval]
+        end
+
+        # (SP+ grammar_rules)* =>
+        # [[SP+ [rule , [SP+, grammar_rule]]]]
+        def cdr
+          if list = tail.elements.first
+            element = list.elements.last
+            element.eval
+          else
+            []
           end
         end
       end
