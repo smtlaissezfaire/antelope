@@ -1,0 +1,9 @@
+Features / TODO
+===============
+
+- Google protocol buf serialization of a compiled grammar.
+- C code to read / parse grammar for fast parsing
+- Bindings to Ruby + other languages for running rule actions
+- composable grammars, as treetop does it (include "other_grammar.antelope").
+- self hosting
+- ANTLR style LL(*) parsing
