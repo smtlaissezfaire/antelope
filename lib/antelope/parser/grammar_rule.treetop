@@ -8,7 +8,15 @@ module Antelope
       end
 
       rule rule_body
-        terminal
+        node (SP+ terminal)* <Instantiators::RuleBody>
+      end
+
+      rule node
+        non_terminal / terminal
+      end
+
+      rule non_terminal
+        ID
       end
 
       rule terminal

@@ -54,6 +54,12 @@ module Antelope
         end
       end
 
+      class RuleBody < Base
+        def eval
+          node.eval
+        end
+      end
+
       class Rule < Base
         def eval
           rule = IR::Rule.new
