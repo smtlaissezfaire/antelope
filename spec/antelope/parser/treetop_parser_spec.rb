@@ -112,15 +112,15 @@ module Antelope
         
         production.should be_a_kind_of(IR::Literal)
       end
-      
+
       it "should use the text in the literal" do
         grammar = @parser.parse("grammar Foo\nbar->'foo'").eval
         rule    = grammar.rules.first
         literal = rule.productions.first
-        
+
         literal.text.should == "foo"
       end
-      
+
       it "should use the correct text" do
         grammar = @parser.parse("grammar Foo\nbar->'bar'").eval
         rule    = grammar.rules.first
@@ -128,13 +128,49 @@ module Antelope
         
         literal.text.should == "bar"
       end
-      
+
       it "should use the text in the literal for a double quoted literal" do
         grammar = @parser.parse("grammar Foo\nbar->\"foo\"").eval
         rule    = grammar.rules.first
         literal = rule.productions.first
         
         literal.text.should == "foo"
+      end
+
+      it "should be able to parse a regex" do
+        @parser.parse("grammar Foo\nbar->/foo/").should_not be_nil
+      end
+
+      it "should parse any regex given" do
+        @parser.parse("grammar Foo\nbar->/adfasdf/").should_not be_nil
+      end
+
+      it "should parse a regex with an escaped delimiter" do
+        @parser.parse("grammar Foo\nbar->/\\/f/").should_not be_nil
+      end
+
+      it "should return a regex" do
+        grammar = @parser.parse("grammar Foo\nbar->/foo/").eval
+        rule    = grammar.rules.first
+        regex   = rule.productions.first
+
+        regex.should be_a_kind_of(IR::Regex)
+      end
+
+      it "should have the text in the regex" do
+        grammar = @parser.parse("grammar Foo\nbar->/foo/").eval
+        rule    = grammar.rules.first
+        regex   = rule.productions.first
+
+        regex.text.should == "foo"
+      end
+
+      it "should have the text in the regex" do
+        grammar = @parser.parse("grammar Foo\nbar->/bar/").eval
+        rule    = grammar.rules.first
+        regex   = rule.productions.first
+
+        regex.text.should == "bar"
       end
     end
   end

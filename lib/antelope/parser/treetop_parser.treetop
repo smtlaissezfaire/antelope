@@ -14,7 +14,25 @@ module Antelope
       end
       
       rule grammar_rule
-        SP+ rule_name:ID SP* "->" SP* literal <Instantiators::Rule>
+        SP+ rule_name:ID SP* "->" SP* rule_body <Instantiators::Rule>
+      end
+
+      rule rule_body
+        regex / literal
+      end
+
+      rule regex
+        REGEX_DELIMITER
+        text:((!REGEX_DELIMITER (ESCAPED_REGEX_DELIMITER / .))*)
+        REGEX_DELIMITER <Instantiators::Regex>
+      end
+
+      rule REGEX_DELIMITER
+        "/"
+      end
+
+      rule ESCAPED_REGEX_DELIMITER
+        '\\/'
       end
       
       rule literal
