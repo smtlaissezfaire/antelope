@@ -9,13 +9,13 @@ module Antelope
       class Grammar < Base
         def eval
           grammar = IR::Grammar.new
-          grammar.name  = grammar_name.eval
+          grammar.name  = grammar_declaration.eval
           grammar.rules = zero_or_more_grammar_rules.eval
           grammar
         end
       end
 
-      class GrammarName < Base
+      class GrammarDeclaration < Base
         def eval
           grammar_identifier.text_value
         end
@@ -45,9 +45,8 @@ module Antelope
         # (SP+ grammar_rules)* =>
         # [[SP+ [rule , [SP+, grammar_rule]]]]
         def cdr
-          if list = tail.elements.first
-            element = list.elements.last
-            element.eval
+          if car = tail.elements.first
+            car.eval
           else
             []
           end

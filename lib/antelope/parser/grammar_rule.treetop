@@ -4,7 +4,7 @@ module Antelope
       include Tokens
 
       rule grammar_rule
-        rule_name:ID SP* "->" SP* rule_body <Instantiators::Rule>
+        rule_name:ID SP* "->" SP* rule_body DELIMITER <Instantiators::Rule>
       end
 
       rule rule_body
