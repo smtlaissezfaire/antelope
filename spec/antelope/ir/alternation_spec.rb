@@ -6,15 +6,15 @@ module Antelope
       it "should initialize with 2 alternatives" do
         Alternation.new(1, 2).alternatives.should == [1, 2]
       end
-      
+
       it "should use the correct values" do
         Alternation.new(2, 3).alternatives.should == [2,3]
       end
-      
+
       it "should be able to use more than 2 alternatives" do
         Alternation.new(1,2,3).alternatives.should == [1,2,3]
       end
-      
+
       it "should raise if given only one argument" do
         lambda {
           Alternation.new(1)

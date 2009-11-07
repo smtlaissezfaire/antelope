@@ -6,7 +6,7 @@ module Antelope
       before do
         @parser = GrammarParser.new
       end
-      
+
       describe "grammar" do
         it "should be able to set a grammar name" do
           @parser.parse("grammar Foo").should_not be_nil
@@ -61,28 +61,28 @@ module Antelope
           grammar = @parser.parse("grammar Foo").eval
           grammar.rules.should be_empty
         end
-      
+
         it "should have one rule when one is given" do
           grammar = @parser.parse("grammar Foo\nfoo->''").eval
           grammar.rules.size.should == 1
         end
-      
+
         it "should set two rules when two are given" do
           grammar = @parser.parse("grammar Foo\nfoo->''\nfoo->''").eval
           grammar.rules.size.should == 2
         end
-      
+
         it "should have a rule as a Rule object" do
           grammar = @parser.parse("grammar Foo\nfoo->''").eval
           grammar.rules.first.should be_a_kind_of(IR::Rule)
         end
-      
+
         it "should give the rule a name" do
           grammar = @parser.parse("grammar Foo\nfoo->''").eval
           rule = grammar.rules.first
           rule.name.should == "foo"
         end
-      
+
         it "should use the correct name" do
           grammar = @parser.parse("grammar Foo\nbar->''").eval
           rule = grammar.rules.first
@@ -91,30 +91,30 @@ module Antelope
       end
 
       describe "literal strings" do
-        it "should allow any literal inside single quotes" do 
+        it "should allow any literal inside single quotes" do
           @parser.parse("grammar Foo\nbar->'foo'").should_not be_nil
         end
-      
+
         it "should allow a literal to be a string quoted with double quote" do
           @parser.parse("grammar Foo\nbar->\"foo\"").should_not be_nil
         end
-      
+
         it "should allow any double quoted literal" do
           @parser.parse("grammar Foo\nbar->\"baradsfad adfa d\"").should_not be_nil
           @parser.parse("grammar Foo\nbar->\"\"").should_not be_nil
         end
-      
+
         it "should create a rule with a production" do
           grammar = @parser.parse("grammar Foo\nbar->'baz'").eval
           rule    = grammar.rules.first
           rule.productions.size.should == 1
         end
-      
+
         it "should have the production as a literal" do
           grammar    = @parser.parse("grammar Foo\nbar->'baz'").eval
           rule       = grammar.rules.first
           production = rule.productions.first
-        
+
           production.should be_a_kind_of(IR::Literal)
         end
 
@@ -130,7 +130,7 @@ module Antelope
           grammar = @parser.parse("grammar Foo\nbar->'bar'").eval
           rule    = grammar.rules.first
           literal = rule.productions.first
-        
+
           literal.text.should == "bar"
         end
 
@@ -138,7 +138,7 @@ module Antelope
           grammar = @parser.parse("grammar Foo\nbar->\"foo\"").eval
           rule    = grammar.rules.first
           literal = rule.productions.first
-        
+
           literal.text.should == "foo"
         end
       end

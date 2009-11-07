@@ -4,15 +4,15 @@ module Antelope
       rule grammar
         grammar_name grammar_rules <Instantiators::Grammar>
       end
-      
+
       rule grammar_name
         GRAMMAR_KEYWORD SP grammar_identifier:ID <Instantiators::GrammarName>
       end
-      
+
       rule grammar_rules
         grammar_rule* <Instantiators::Rules>
       end
-      
+
       rule grammar_rule
         SP+ rule_name:ID SP* "->" SP* rule_body <Instantiators::Rule>
       end
@@ -38,35 +38,35 @@ module Antelope
       rule ESCAPED_REGEX_DELIMITER
         '\\/'
       end
-      
+
       rule literal
         single_quoted_literal / double_quoted_literal
       end
-      
+
       rule single_quoted_literal
         SINGLE_QUOTE text:((!SINGLE_QUOTE .)*) SINGLE_QUOTE <Instantiators::Literal>
       end
-      
+
       rule double_quoted_literal
         DOUBLE_QUOTE text:((!DOUBLE_QUOTE .)*) DOUBLE_QUOTE <Instantiators::Literal>
       end
-      
+
       rule SINGLE_QUOTE
         "'"
       end
-      
+
       rule DOUBLE_QUOTE
         '"'
       end
-      
+
       rule GRAMMAR_KEYWORD
         "grammar"
       end
-      
+
       rule SP
         [ \n]
       end
-      
+
       rule ID
         [A-Za-z\_]+
       end

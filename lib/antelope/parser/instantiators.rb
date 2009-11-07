@@ -5,7 +5,7 @@ module Antelope
         def eval
         end
       end
-      
+
       class Grammar < Base
         def eval
           grammar = IR::Grammar.new
@@ -14,13 +14,13 @@ module Antelope
           grammar
         end
       end
-      
+
       class GrammarName < Base
         def eval
           grammar_identifier.text_value
         end
       end
-      
+
       class Rules < Base
         def eval
           elements.map do |e|
