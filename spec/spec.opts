@@ -1,3 +1,4 @@
 --color
 --format profile
 --backtrace
+--reverse
