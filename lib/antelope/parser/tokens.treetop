@@ -1,0 +1,33 @@
+module Antelope
+  module Parser
+    grammar Tokens
+      rule REGEX_DELIMITER
+        "/"
+      end
+
+      rule ESCAPED_REGEX_DELIMITER
+        '\\/'
+      end
+
+      rule SINGLE_QUOTE
+        "'"
+      end
+
+      rule DOUBLE_QUOTE
+        '"'
+      end
+
+      rule GRAMMAR_KEYWORD
+        "grammar"
+      end
+
+      rule SP
+        [ \n]
+      end
+
+      rule ID
+        [A-Za-z\_]+
+      end
+    end
+  end
+end

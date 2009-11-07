@@ -1,0 +1,37 @@
+module Antelope
+  module Parser
+    grammar Rules
+      include Tokens
+
+      rule grammar_rule
+        SP+ rule_name:ID SP* "->" SP* rule_body <Instantiators::Rule>
+      end
+
+      rule rule_body
+        terminal
+      end
+
+      rule terminal
+        regex / literal
+      end
+
+      rule regex
+        REGEX_DELIMITER
+        text:((!REGEX_DELIMITER (ESCAPED_REGEX_DELIMITER / .))*)
+        REGEX_DELIMITER <Instantiators::Regex>
+      end
+
+      rule literal
+        single_quoted_literal / double_quoted_literal
+      end
+
+      rule single_quoted_literal
+        SINGLE_QUOTE text:((!SINGLE_QUOTE .)*) SINGLE_QUOTE <Instantiators::Literal>
+      end
+
+      rule double_quoted_literal
+        DOUBLE_QUOTE text:((!DOUBLE_QUOTE .)*) DOUBLE_QUOTE <Instantiators::Literal>
+      end
+    end
+  end
+end
