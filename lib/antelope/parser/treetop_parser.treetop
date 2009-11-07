@@ -18,6 +18,10 @@ module Antelope
       end
 
       rule rule_body
+        terminal
+      end
+
+      rule terminal
         regex / literal
       end
 
