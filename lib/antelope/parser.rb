@@ -5,7 +5,7 @@ module Antelope
     require 'treetop'
 
     Treetop.load File.dirname(__FILE__) + "/parser/tokens.treetop"
-    Treetop.load File.dirname(__FILE__) + "/parser/rules.treetop"
+    Treetop.load File.dirname(__FILE__) + "/parser/grammar_rule.treetop"
     Treetop.load File.dirname(__FILE__) + "/parser/treetop_parser.treetop"
 
     using :Instantiators
