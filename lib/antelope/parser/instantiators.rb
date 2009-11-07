@@ -63,12 +63,6 @@ module Antelope
         end
       end
 
-      class RuleBody < Base
-        def eval
-          literal.eval
-        end
-      end
-
       class Regex < Base
         def eval
           regex = IR::Regex.new
