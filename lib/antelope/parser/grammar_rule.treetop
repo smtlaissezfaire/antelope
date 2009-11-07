@@ -8,7 +8,7 @@ module Antelope
       end
 
       rule rule_body
-        node (SP+ terminal)* <Instantiators::RuleBody>
+        node (SP+ node)* <Instantiators::RuleBody>
       end
 
       rule node

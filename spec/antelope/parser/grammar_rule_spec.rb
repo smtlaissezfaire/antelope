@@ -28,9 +28,11 @@ module Antelope
       end
 
       it "should allow a reference to two rules" do
-        pending do
-          @parser.parse("foo -> bar baz;").should_not be_nil
-        end
+        @parser.parse("foo -> bar baz;").should_not be_nil
+      end
+
+      it "should allow a reference to multiple rules" do
+        @parser.parse("foo -> bar baz baz;").should_not be_nil
       end
     end
   end
