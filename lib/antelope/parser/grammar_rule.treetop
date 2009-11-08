@@ -28,6 +28,18 @@ module Antelope
       end
 
       rule suffix
+        repetition / kleen_star / optional_expression
+      end
+
+      rule repetition
+        PLUS
+      end
+
+      rule kleen_star
+        STAR
+      end
+
+      rule optional_expression
         QUESTION_MARK
       end
 

@@ -48,6 +48,14 @@ module Antelope
       rule QUESTION_MARK
         "?"
       end
+
+      rule STAR
+        "*"
+      end
+
+      rule PLUS
+        "+"
+      end
     end
   end
 end

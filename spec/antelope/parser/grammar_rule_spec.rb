@@ -98,6 +98,14 @@ module Antelope
       it "should allow an optional parenthesized expression with a question of a regex" do
         @parser.parse("foo -> /foo/?;").should_not be_nil
       end
+
+      it "should allow a repeated expression with a + for repetition" do
+        @parser.parse("foo -> bar+;").should_not be_nil
+      end
+
+      it "should allow an optionally repeated expression with a '*'" do
+        @parser.parse("foo -> bar*;").should_not be_nil
+      end
     end
   end
 end
