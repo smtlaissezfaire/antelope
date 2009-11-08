@@ -144,6 +144,16 @@ module Antelope
           rule = @parser.parse("foo -> foo;").eval
           rule.productions.first.should equal(rule)
         end
+
+        it "should have multiple rules as multiple productions" do
+          rule = @parser.parse("foo -> 'bar' 'baz';").eval
+          rule.productions.size.should == 2
+        end
+
+        it "should allow 3 expressions" do
+          rule = @parser.parse("foo -> 'bar' 'baz' 'quxx';").eval
+          rule.productions.size.should == 3
+        end
       end
     end
   end

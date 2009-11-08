@@ -61,7 +61,7 @@ module Antelope
 
       class Sequence < Base
         def eval
-          node.eval
+          [node.eval, expression.eval].compact
         end
       end
 
@@ -74,7 +74,7 @@ module Antelope
       class Rule < Base
         def eval
           rule = IR::Rule.find_or_create_by_name(rule_name.text_value)
-          rule.productions = [rule_body.eval]
+          rule.productions = [rule_body.eval].flatten
           rule
         end
       end
