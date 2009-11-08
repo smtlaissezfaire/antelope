@@ -1,6 +1,14 @@
 module Antelope
   module Parser
     grammar Tokens
+      rule OPEN_PAREN
+        "("
+      end
+
+      rule CLOSE_PAREN
+        ")"
+      end
+
       rule DELIMITER
         SP* SEMI_COLON SP*
       end

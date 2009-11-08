@@ -12,7 +12,7 @@ module Antelope
       end
 
       rule expression
-        choice / sequence
+        choice / sequence / node
       end
 
       rule choice
@@ -20,11 +20,15 @@ module Antelope
       end
 
       rule sequence
-        node (SP+ expression)* <Instantiators::Sequence>
+        node SP+ expression <Instantiators::Sequence>
       end
 
       rule node
-        non_terminal / terminal
+        terminal / non_terminal / parenthesized_expression
+      end
+
+      rule parenthesized_expression
+        OPEN_PAREN SP* expression SP* CLOSE_PAREN
       end
 
       rule non_terminal

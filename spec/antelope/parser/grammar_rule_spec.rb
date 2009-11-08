@@ -54,6 +54,30 @@ module Antelope
       it "should allow an OR after an AND" do
         @parser.parse("foo -> bar baz | quxx;").should_not be_nil
       end
+
+      it "should allow parens arond an expression" do
+        @parser.parse("foo -> (bar);").should_not be_nil
+      end
+
+      it "should allow multiple parens around an expression" do
+        @parser.parse("foo -> ((bar));").should_not be_nil
+      end
+
+      it "should allow parens around two expressions" do
+        @parser.parse("foo -> (bar baz);").should_not be_nil
+      end
+
+      it "should allow parens around a subexpression" do
+        @parser.parse("foo -> bar (baz quxx);").should_not be_nil
+      end
+
+      it "should allow parens around a left subexpression" do
+        @parser.parse("foo -> (bar baz) quxx;").should_not be_nil
+      end
+
+      it "should allow parens around an OR" do
+        @parser.parse("foo -> (foo | bar) baz;").should_not be_nil
+      end
     end
   end
 end
