@@ -16,7 +16,7 @@ module Antelope
       end
 
       rule choice
-        node SP+ "|" SP+ expression
+        node SP+ "|" SP+ expression <Instantiators::Choice>
       end
 
       rule sequence

@@ -154,6 +154,43 @@ module Antelope
           rule = @parser.parse("foo -> 'bar' 'baz' 'quxx';").eval
           rule.productions.size.should == 3
         end
+
+        it "should have an or expression as one production" do
+          rule = @parser.parse("foo -> 'bar' | 'baz';").eval
+          rule.productions.size.should == 1
+        end
+
+        it "should create an IR::Alternation from an OR expression" do
+          rule = @parser.parse("foo -> 'bar' | 'baz';").eval
+          alternation = rule.productions.first
+
+          alternation.should be_a_kind_of(IR::Alternation)
+        end
+
+        it "should have the first alternative" do
+          rule = @parser.parse("foo -> 'bar' | 'baz';").eval
+          alternation = rule.productions.first
+
+          first = alternation.alternatives.first
+          first.should be_a_kind_of(IR::Literal)
+        end
+
+        it "should have the proper second alternative" do
+          rule = @parser.parse("foo -> 'bar' | 'baz';").eval
+          alternation = rule.productions.first
+
+          second = alternation.alternatives.last
+          second.should be_a_kind_of(IR::Literal)
+        end
+
+        it "should allow multiple ORs - with the second as an alternation of the second two values" do
+          rule = @parser.parse("foo -> 'bar' | 'baz' | 'quxx';").eval
+          alternation = rule.productions.first
+
+          second = alternation.alternatives.last
+          second.should be_a_kind_of(IR::Alternation)
+          second.alternatives.size.should == 2
+        end
       end
     end
   end

@@ -53,9 +53,9 @@ module Antelope
         end
       end
 
-      class RuleBody < Base
+      class Choice < Base
         def eval
-          sequence.eval
+          IR::Alternation.new(node.eval, expression.eval)
         end
       end
 
