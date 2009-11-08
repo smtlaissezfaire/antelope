@@ -65,6 +65,12 @@ module Antelope
         end
       end
 
+      class Node < Base
+        def eval
+          atom.eval
+        end
+      end
+
       class Rule < Base
         def eval
           rule = IR::Rule.new

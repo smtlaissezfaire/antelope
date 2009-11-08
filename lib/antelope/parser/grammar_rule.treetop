@@ -24,6 +24,14 @@ module Antelope
       end
 
       rule node
+        atom suffix? <Instantiators::Node>
+      end
+
+      rule suffix
+        QUESTION_MARK
+      end
+
+      rule atom
         terminal / non_terminal / parenthesized_expression
       end
 

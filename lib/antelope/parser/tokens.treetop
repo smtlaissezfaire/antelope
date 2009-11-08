@@ -44,6 +44,10 @@ module Antelope
       rule ID
         [A-Za-z\_]+
       end
+
+      rule QUESTION_MARK
+        "?"
+      end
     end
   end
 end

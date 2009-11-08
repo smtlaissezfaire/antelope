@@ -78,6 +78,26 @@ module Antelope
       it "should allow parens around an OR" do
         @parser.parse("foo -> (foo | bar) baz;").should_not be_nil
       end
+
+      it "should allow an optional expression with a question mark" do
+        @parser.parse("foo -> bar?;").should_not be_nil
+      end
+
+      it "should allow an optional parenthesized expression with a question mark" do
+        @parser.parse("foo -> (bar)?;").should_not be_nil
+      end
+
+      it "should allow an optional parenthesized expression with a question mark inside of it" do
+        @parser.parse("foo -> (bar?);").should_not be_nil
+      end
+
+      it "should allow an optional parenthesized expression with a question of a string expression" do
+        @parser.parse("foo -> \"bar\"?;").should_not be_nil
+      end
+
+      it "should allow an optional parenthesized expression with a question of a regex" do
+        @parser.parse("foo -> /foo/?;").should_not be_nil
+      end
     end
   end
 end
