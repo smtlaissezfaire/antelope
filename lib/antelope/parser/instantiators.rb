@@ -73,10 +73,15 @@ module Antelope
 
       class Rule < Base
         def eval
-          rule = IR::Rule.new
-          rule.name = rule_name.text_value
+          rule = IR::Rule.find_or_create_by_name(rule_name.text_value)
           rule.productions = [rule_body.eval]
           rule
+        end
+      end
+
+      module NonTerminal
+        def eval
+          IR::Rule.find_or_create_by_name(text_value)
         end
       end
 

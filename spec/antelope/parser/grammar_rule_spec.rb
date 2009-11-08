@@ -108,6 +108,43 @@ module Antelope
           @parser.parse("foo -> bar*;").should_not be_nil
         end
       end
+
+      describe "instantiation" do
+        it "should instantiate a string" do
+          rule = @parser.parse("foo -> 'bar';").eval
+          expr = rule.productions.first
+          expr.should be_a_kind_of(IR::Literal)
+        end
+
+        it "should instantiate a regex" do
+          rule = @parser.parse("foo -> /bar/;").eval
+          expr = rule.productions.first
+          expr.should be_a_kind_of(IR::Regex)
+        end
+
+        it "should instantiate a rule" do
+          rule = @parser.parse("foo -> bar;").eval
+          expr = rule.productions.first
+          expr.should be_a_kind_of(IR::Rule)
+        end
+
+        it "should use a name for the rule" do
+          rule = @parser.parse("foo -> bar;").eval
+          expr = rule.productions.first
+          expr.name.should == "bar"
+        end
+
+        it "should use the correct name for the rule" do
+          rule = @parser.parse("foo -> baz;").eval
+          expr = rule.productions.first
+          expr.name.should == "baz"
+        end
+
+        it "should be able to have a rule refer to itself" do
+          rule = @parser.parse("foo -> foo;").eval
+          rule.productions.first.should equal(rule)
+        end
+      end
     end
   end
 end

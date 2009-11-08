@@ -52,7 +52,7 @@ module Antelope
       end
 
       rule non_terminal
-        ID
+        ID <Instantiators::NonTerminal>
       end
 
       rule terminal

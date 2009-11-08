@@ -70,6 +70,36 @@ module Antelope
           @rule.should_not be_compilable
         end
       end
+
+      describe "find_or_create_by_name" do
+        before do
+          Rule.clear_instances!
+        end
+
+        it "should create a new one" do
+          r = Rule.find_or_create_by_name("foo")
+          r.should be_a_kind_of(Rule)
+        end
+
+        it "should create a new one with the name" do
+          r = Rule.find_or_create_by_name("foo")
+          r.name.should == "foo"
+        end
+
+        it "should create a new one with the correct name" do
+          r = Rule.find_or_create_by_name("bar")
+          r.name.should == "bar"
+        end
+
+        it "should find an existing one with the name" do
+          r1 = Rule.new
+          r1.name = "foo"
+
+          r2 = Rule.find_or_create_by_name("foo")
+
+          r2.should equal(r1)
+        end
+      end
     end
   end
 end
