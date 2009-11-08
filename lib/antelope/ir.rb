@@ -7,5 +7,8 @@ module Antelope
     using :Alternation
     using :Literal
     using :Regex
+    using :OptionalExpression
+    using :Repetition
+    using :OptionalRepetition
   end
 end
