@@ -34,6 +34,26 @@ module Antelope
       it "should allow a reference to multiple rules" do
         @parser.parse("foo -> bar baz baz;").should_not be_nil
       end
+
+      it "should allow an OR expression" do
+        @parser.parse("foo -> bar | baz;").should_not be_nil
+      end
+
+      it "should allow multiple spaces between or expressions" do
+        @parser.parse("foo -> bar     |    baz;").should_not be_nil
+      end
+
+      it "should allow multiple OR expressions" do
+        @parser.parse("foo -> bar | baz | quxx;").should_not be_nil
+      end
+
+      it "should allow an OR with an AND expression" do
+        @parser.parse("foo -> bar | baz quxx;").should_not be_nil
+      end
+
+      it "should allow an OR after an AND" do
+        @parser.parse("foo -> bar baz | quxx;").should_not be_nil
+      end
     end
   end
 end

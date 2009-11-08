@@ -55,6 +55,12 @@ module Antelope
 
       class RuleBody < Base
         def eval
+          sequence.eval
+        end
+      end
+
+      class Sequence < Base
+        def eval
           node.eval
         end
       end

@@ -8,7 +8,19 @@ module Antelope
       end
 
       rule rule_body
-        node (SP+ node)* <Instantiators::RuleBody>
+        expression
+      end
+
+      rule expression
+        choice / sequence
+      end
+
+      rule choice
+        node SP+ "|" SP+ expression
+      end
+
+      rule sequence
+        node (SP+ expression)* <Instantiators::Sequence>
       end
 
       rule node
