@@ -24,11 +24,14 @@ module Antelope
       end
 
       rule node
-        atom suffix? <Instantiators::Node>
+        atom suffix <Instantiators::Node>
       end
 
       rule suffix
-        repetition / kleen_star / optional_expression
+        repetition          <Instantiators::NodeWrappers::Repetition>         /
+        kleen_star          <Instantiators::NodeWrappers::KleenStar>          /
+        optional_expression <Instantiators::NodeWrappers::OptionalExpression> /
+        ''                  <Instantiators::NodeWrappers::EmptySuffix>
       end
 
       rule repetition

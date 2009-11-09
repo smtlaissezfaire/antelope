@@ -208,6 +208,54 @@ module Antelope
 
           result.should be_a_kind_of(IR::Literal)
         end
+
+        it "should parse a question mark as an optional expression" do
+          rule = @parser.parse("foo -> 'bar'?;").eval
+
+          expression = rule.productions.first
+
+          expression.should be_a_kind_of(IR::OptionalExpression)
+        end
+
+        it "should use the correct value for the optional expression predicate" do
+          rule = @parser.parse("foo -> 'bar'?;").eval
+
+          expression = rule.productions.first
+
+          expression.expression.should be_a_kind_of(IR::Literal)
+        end
+
+        it "should parse a plus as an repetition" do
+          rule = @parser.parse("foo -> 'bar'+;").eval
+
+          expression = rule.productions.first
+
+          expression.should be_a_kind_of(IR::Repetition)
+        end
+
+        it "should use the correct value for the plus predicate" do
+          rule = @parser.parse("foo -> 'bar'+;").eval
+
+          repetition = rule.productions.first
+
+          repetition.expressions.first.should be_a_kind_of(IR::Literal)
+        end
+
+        it "should parse a star as an optional repetition" do
+          rule = @parser.parse("foo -> 'bar'*;").eval
+
+          expression = rule.productions.first
+
+          expression.should be_a_kind_of(IR::OptionalRepetition)
+        end
+
+        it "should use the correct predicate for the optional repetition" do
+          rule = @parser.parse("foo -> 'bar'*;").eval
+
+          expression = rule.productions.first
+
+          expression.expressions.first.should be_a_kind_of(IR::Literal)
+        end
       end
     end
   end

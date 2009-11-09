@@ -67,7 +67,33 @@ module Antelope
 
       class Node < Base
         def eval
-          atom.eval
+          suffix.wrap(atom.eval)
+        end
+      end
+
+      module NodeWrappers
+        module Repetition
+          def wrap(node)
+            IR::Repetition.new(node)
+          end
+        end
+
+        module KleenStar
+          def wrap(node)
+            IR::OptionalRepetition.new(node)
+          end
+        end
+
+        module OptionalExpression
+          def wrap(node)
+            IR::OptionalExpression.new(node)
+          end
+        end
+
+        module EmptySuffix
+          def wrap(node)
+            node
+          end
         end
       end
 
