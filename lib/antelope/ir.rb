@@ -10,5 +10,6 @@ module Antelope
     using :OptionalExpression
     using :Repetition
     using :OptionalRepetition
+    using :GroupedExpression
   end
 end
