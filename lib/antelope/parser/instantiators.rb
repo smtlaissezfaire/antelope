@@ -27,12 +27,6 @@ module Antelope
         end
       end
 
-      class OneOrMoreGrammarRules < Base
-        def eval
-          grammar_rules.eval
-        end
-      end
-
       module MultipleRules
         def eval
           car + cdr
