@@ -78,6 +78,28 @@ module Antelope
           @grammar.should_not be_compilable
         end
       end
+
+      describe "inclusions" do
+        before do
+          @grammar = Grammar.new
+        end
+
+        it "should include 0 other grammars by default" do
+          @grammar.included_grammars.should == []
+        end
+
+        it "should be able to include a grammar" do
+          @grammar.include "Foo"
+          @grammar.included_grammars.should == ["Foo"]
+        end
+
+        it "should be able to include several grammars" do
+          @grammar.include "Foo"
+          @grammar.include "Bar"
+
+          @grammar.included_grammars.should == ["Foo", "Bar"]
+        end
+      end
     end
   end
 end
