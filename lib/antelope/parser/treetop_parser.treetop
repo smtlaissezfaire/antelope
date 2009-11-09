@@ -16,7 +16,15 @@ module Antelope
       end
 
       rule grammar_rules
-        head:grammar_rule tail:grammar_rules* <Instantiators::MultipleRules>
+        head:declaration tail:grammar_rules* <Instantiators::MultipleRules>
+      end
+
+      rule declaration
+        grammar_rule / include_statement
+      end
+
+      rule include_statement
+        "include" SP+ text:ID DELIMITER <Instantiators::Include>
       end
     end
   end

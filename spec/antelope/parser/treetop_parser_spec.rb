@@ -205,6 +205,57 @@ module Antelope
           regex.text.should == "bar"
         end
       end
+
+      describe "including a different grammar" do
+        describe "parsing" do
+          it "should parse an include" do
+            @parser.parse("grammar Foo; include Bar;").should_not be_nil
+          end
+
+          it "should parse a different include statement" do
+            @parser.parse("grammar Foo; include Baz;").should_not be_nil
+          end
+
+          it "should allow any number of spaces in an include statement" do
+            @parser.parse("grammar Foo; include        Baz              ;").should_not be_nil
+          end
+
+          it "should allow any number of spaces after the include delimiter" do
+            @parser.parse("grammar Foo; include Bar;                   ").should_not be_nil
+          end
+
+          it "should allow for multiple include statements" do
+            @parser.parse("grammar Foo; include Bar; include Baz;").should_not be_nil
+          end
+        end
+
+        describe "evaling" do
+          it "should have 0 included grammars when none are given" do
+            grammar = @parser.parse("grammar Foo;").eval
+            grammar.included_grammars.size.should == 0
+          end
+
+          it "should have 1 include when one given" do
+            grammar = @parser.parse("grammar Foo; include Bar;").eval
+            grammar.included_grammars.size.should == 1
+          end
+
+          it "should have 2 includes when two are given" do
+            grammar = @parser.parse("grammar Foo; include Bar; include Baz;").eval
+            grammar.included_grammars.size.should == 2
+          end
+
+          it "should have the name given" do
+            grammar = @parser.parse("grammar Foo; include Bar;").eval
+            grammar.included_grammars.should == ["Bar"]
+          end
+
+          it "should use the correct name given" do
+            grammar = @parser.parse("grammar Foo; include Baz;").eval
+            grammar.included_grammars.should == ["Baz"]
+          end
+        end
+      end
     end
   end
 end

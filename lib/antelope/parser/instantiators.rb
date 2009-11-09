@@ -10,7 +10,15 @@ module Antelope
         def eval
           grammar = IR::Grammar.new
           grammar.name  = grammar_declaration.eval
-          grammar.rules = declaration_sequence.eval
+
+          declaration_sequence.eval.each do |declaration|
+            if declaration.kind_of?(Include)
+              grammar.include declaration.name
+            else
+              grammar.rules << declaration
+            end
+          end
+
           grammar
         end
       end
@@ -44,6 +52,15 @@ module Antelope
           else
             []
           end
+        end
+      end
+
+      class Include < Base
+        attr_reader :name
+
+        def eval
+          @name = text.text_value
+          self
         end
       end
 
