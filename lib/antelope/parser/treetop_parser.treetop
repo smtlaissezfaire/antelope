@@ -12,7 +12,7 @@ module Antelope
       end
 
       rule declaration_sequence
-        grammar_rules / '' <Instantiators::EmptyGrammarRuleList>
+        grammar_rules / '' <Instantiators::EmptyDeclarationSequence>
       end
 
       rule grammar_rules

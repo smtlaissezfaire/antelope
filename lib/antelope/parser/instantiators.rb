@@ -21,7 +21,7 @@ module Antelope
         end
       end
 
-      class EmptyGrammarRuleList < Base
+      class EmptyDeclarationSequence < Base
         def eval
           []
         end
