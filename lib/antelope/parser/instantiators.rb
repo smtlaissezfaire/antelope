@@ -85,6 +85,12 @@ module Antelope
         end
       end
 
+      class ParenthesizedExpression < Base
+        def eval
+          IR::GroupedExpression.new(expression.eval)
+        end
+      end
+
       class Regex < Base
         def eval
           regex = IR::Regex.new

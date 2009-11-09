@@ -191,6 +191,23 @@ module Antelope
           second.should be_a_kind_of(IR::Alternation)
           second.alternatives.size.should == 2
         end
+
+        it "should have a parenthesized expression as a grouped expression" do
+          rule = @parser.parse("foo -> ('bar');").eval
+          expression = rule.productions.first
+
+          expression.should be_a_kind_of(IR::GroupedExpression)
+        end
+
+        it "should have the results of the parenthesized expression" do
+          rule = @parser.parse("foo -> ('bar');").eval
+          expression = rule.productions.first
+
+          expression.expressions.size.should == 1
+          result = expression.expressions.first
+
+          result.should be_a_kind_of(IR::Literal)
+        end
       end
     end
   end

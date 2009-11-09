@@ -5,7 +5,7 @@ module Antelope
     describe GroupedExpression do
       it "should have a list of expressions" do
         expr = Object.new
-        grouped = GroupedExpression.new([expr])
+        grouped = GroupedExpression.new(expr)
         grouped.expressions.should == [expr]
       end
     end

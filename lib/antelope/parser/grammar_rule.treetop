@@ -48,7 +48,7 @@ module Antelope
       end
 
       rule parenthesized_expression
-        OPEN_PAREN SP* expression SP* CLOSE_PAREN
+        OPEN_PAREN SP* expression SP* CLOSE_PAREN <Instantiators::ParenthesizedExpression>
       end
 
       rule non_terminal

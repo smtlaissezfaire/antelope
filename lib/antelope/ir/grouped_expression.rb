@@ -1,7 +1,7 @@
 module Antelope
   module IR
     class GroupedExpression
-      def initialize(expressions)
+      def initialize(*expressions)
         @expressions = expressions
       end
 
