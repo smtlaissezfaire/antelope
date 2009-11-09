@@ -70,6 +70,10 @@ module Antelope
         it "should allow any number of spaces at the end of grammar (after a rule declaration)" do
           @parser.parse("grammar Foo; bar -> 'baz';              ").should_not be_nil
         end
+
+        it "should allow any number of spaces before the grammar declaration" do
+          @parser.parse("            grammar Foo;").should_not be_nil
+        end
       end
 
       describe "rule names, rules" do

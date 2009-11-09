@@ -4,7 +4,7 @@ module Antelope
       include GrammarRule
 
       rule grammar
-        grammar_declaration zero_or_more_grammar_rules <Instantiators::Grammar>
+        SP* grammar_declaration zero_or_more_grammar_rules <Instantiators::Grammar>
       end
 
       rule grammar_declaration
