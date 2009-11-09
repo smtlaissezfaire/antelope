@@ -10,7 +10,7 @@ module Antelope
         def eval
           grammar = IR::Grammar.new
           grammar.name  = grammar_declaration.eval
-          grammar.rules = zero_or_more_grammar_rules.eval
+          grammar.rules = declaration_sequence.eval
           grammar
         end
       end

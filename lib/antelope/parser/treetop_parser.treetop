@@ -4,14 +4,14 @@ module Antelope
       include GrammarRule
 
       rule grammar
-        SP* grammar_declaration zero_or_more_grammar_rules <Instantiators::Grammar>
+        SP* grammar_declaration declaration_sequence <Instantiators::Grammar>
       end
 
       rule grammar_declaration
         GRAMMAR_KEYWORD SP grammar_identifier:ID DELIMITER <Instantiators::GrammarDeclaration>
       end
 
-      rule zero_or_more_grammar_rules
+      rule declaration_sequence
         grammar_rules / '' <Instantiators::EmptyGrammarRuleList>
       end
 
