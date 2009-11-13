@@ -4,7 +4,7 @@ module Antelope
       include Tokens
 
       rule grammar_rule
-        rule_name:ID SP* "->" SP* rule_body DELIMITER <Instantiators::Rule>
+        rule_name:ID SP* PRODUCES SP* rule_body DELIMITER <Instantiators::Rule>
       end
 
       rule rule_body
@@ -16,7 +16,7 @@ module Antelope
       end
 
       rule choice
-        node SP+ "|" SP+ expression <Instantiators::Choice>
+        node SP+ OR SP+ expression <Instantiators::Choice>
       end
 
       rule sequence
@@ -31,7 +31,7 @@ module Antelope
         repetition          <Instantiators::NodeWrappers::Repetition>         /
         kleen_star          <Instantiators::NodeWrappers::KleenStar>          /
         optional_expression <Instantiators::NodeWrappers::OptionalExpression> /
-        ''                  <Instantiators::NodeWrappers::EmptySuffix>
+        EPSILON             <Instantiators::NodeWrappers::EmptySuffix>
       end
 
       rule repetition

@@ -56,6 +56,18 @@ module Antelope
       rule PLUS
         "+"
       end
+
+      rule OR
+        "|"
+      end
+
+      rule PRODUCES
+        "->"
+      end
+
+      rule EPSILON
+        ''
+      end
     end
   end
 end
