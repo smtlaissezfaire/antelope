@@ -15,10 +15,14 @@ module Antelope
         included_grammars << grammar_name
       end
 
+      def start_rule
+        rules.detect { |rule| rule.name == start_symbol }
+      end
+
     private
 
       def start_symbol_valid?
-        rules.any? { |r| r.name == start_symbol }
+        start_rule ? true : false
       end
     end
   end
