@@ -37,40 +37,6 @@ module Antelope
         end
       end
 
-      describe "compilable?" do
-        before do
-          @rule = new_compilable_rule
-        end
-
-        def new_compilable_rule
-          grammar = Grammar.new
-          rule = Rule.new
-          rule.grammar = grammar
-          rule.name = "foo"
-          rule.productions = [[Rule.new]]
-          rule
-        end
-
-        it "should be true with productions, a name, and belonging to a grammar" do
-          @rule.should be_compilable
-        end
-
-        it "should be false if it doesn't belong to a grammar" do
-          @rule.grammar = nil
-          @rule.should_not be_compilable
-        end
-
-        it "should be false if it has no productions" do
-          @rule.productions = []
-          @rule.should_not be_compilable
-        end
-
-        it "should be false if it has no name" do
-          @rule.name = nil
-          @rule.should_not be_compilable
-        end
-      end
-
       describe "find_or_create_by_name" do
         before do
           Rule.clear_instances!

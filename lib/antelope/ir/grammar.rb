@@ -15,10 +15,6 @@ module Antelope
         included_grammars << grammar_name
       end
 
-      def compilable?
-        start_symbol && start_symbol_valid? && rules.any?
-      end
-
     private
 
       def start_symbol_valid?

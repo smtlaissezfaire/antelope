@@ -40,10 +40,6 @@ module Antelope
 
         @grammar = grammar
       end
-
-      def compilable?
-        grammar && name && productions.any?
-      end
     end
   end
 end
