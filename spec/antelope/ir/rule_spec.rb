@@ -13,16 +13,6 @@ module Antelope
         @rule.name.should equal(:foo)
       end
 
-      it "should belong to a grammar" do
-        @rule.grammar = @grammar
-        @rule.grammar.should equal(@grammar)
-      end
-
-      it "should back-associate the grammar with the rule" do
-        @rule.grammar = @grammar
-        @rule.grammar.rules.should == [@rule]
-      end
-
       describe "productions / right hand sides" do
         it "should have no productions initially" do
           @rule.productions.should == []
