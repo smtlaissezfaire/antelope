@@ -61,6 +61,33 @@ module Antelope
           @grammar.included_grammars.should == ["Foo", "Bar"]
         end
       end
+
+      describe "start rule" do
+        before do
+          @grammar = Grammar.new
+        end
+
+        it "should be the start symbol if there is a rule by that name" do
+          rule = Rule.new("foo")
+
+          @grammar.rules << rule
+          @grammar.start_symbol = "foo"
+          @grammar.start_rule.should == rule
+        end
+
+        it "should be the first rule if no start symbol is around" do
+          rule = Rule.new("foo")
+
+          @grammar.rules << rule
+          @grammar.start_symbol = nil
+          @grammar.start_rule.should == rule
+        end
+
+        it "should be nil if no start symbol & no rules" do
+          @grammar.rules = []
+          @grammar.start_rule.should be_nil
+        end
+      end
     end
   end
 end

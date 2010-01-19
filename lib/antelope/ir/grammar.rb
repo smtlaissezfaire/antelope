@@ -16,7 +16,7 @@ module Antelope
       end
 
       def start_rule
-        rules.detect { |rule| rule.name == start_symbol }
+        rules.detect { |rule| rule.name == start_symbol } || rules.first
       end
 
     private
