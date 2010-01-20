@@ -1,3 +1,4 @@
+require File.join(File.dirname(__FILE__), "antelope", "vendor")
 require "using"
 
 module Antelope
