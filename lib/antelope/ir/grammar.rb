@@ -19,6 +19,16 @@ module Antelope
         rules.detect { |rule| rule.name == start_symbol } || rules.first
       end
 
+      def to_protobuf
+        grammar = Compiler::ProtocolBuffer::Grammar.new
+        grammar.name = name
+        grammar.start_rule_name = start_rule.name
+        rules.each do |rule|
+          grammar.rules << rule.to_protobuf
+        end
+        grammar
+      end
+
     private
 
       def start_symbol_valid?

@@ -8,5 +8,6 @@ module Antelope
 
   using :IR, :file => "ir"
   using :Parser
+  using :Compiler
   using :Version
 end

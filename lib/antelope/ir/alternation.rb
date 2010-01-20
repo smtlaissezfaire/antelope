@@ -6,6 +6,15 @@ module Antelope
       end
 
       attr_reader :alternatives
+
+      def protobuf_reference
+        production = Compiler::ProtocolBuffer::Production.new
+        production.type = "or"
+        alternatives.map { |alternative| alternative.identifier }.each do |id|
+          production.identifiers << id
+        end
+        production
+      end
     end
   end
 end

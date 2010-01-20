@@ -1,0 +1,23 @@
+package antelope.compiler;
+
+message ProtocolBuffer {
+  message Production {
+    required string type         = 1;
+    required int32  identifier   = 2;
+    repeated int32  identifiers  = 3;
+  }
+
+  message Rule {
+    required int32      identifier   = 1;
+    required string     name         = 2;
+    repeated Production productions  = 3;
+  }
+
+  message Grammar {
+    required string name            = 1;
+    required string start_rule_name = 2;
+    repeated Rule   rules           = 3;
+  }
+
+  required Grammar grammar = 1;
+}

@@ -31,6 +31,27 @@ module Antelope
 
       attr_accessor :name
       attr_accessor :productions
+
+      def to_protobuf
+        rule = Compiler::ProtocolBuffer::Rule.new
+        rule.name = name
+        rule.identifier = identifier
+        productions.each do |production|
+          rule.productions << production.protobuf_reference
+        end
+        rule
+      end
+
+      def protobuf_reference
+        production = Compiler::ProtocolBuffer::Production.new
+        production.type       = "reference"
+        production.identifier = identifier
+        production
+      end
+
+      def identifier
+        name.hash
+      end
     end
   end
 end
