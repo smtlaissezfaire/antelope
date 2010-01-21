@@ -155,6 +155,27 @@ module Antelope
           production.text.should == "bar"
         end
       end
+
+      describe "an optional expression" do
+        before do
+          @target = IR::Literal.new
+
+          @optional = IR::OptionalExpression.new(@target)
+          @rule.productions << @optional
+        end
+
+        it "should have the type" do
+          protobuf = Compiler.compile(@grammar)
+          production = protobuf.grammar.rules.first.productions.first
+          production.type.should == Compiler::ProtocolBuffer::ProductionTypes::OPTIONAL_EXPRESSION
+        end
+
+        it "should have a reference to the expression" do
+          protobuf = Compiler.compile(@grammar)
+          production = protobuf.grammar.rules.first.productions.first
+          production.identifiers.should == [@target.hash]
+        end
+      end
     end
   end
 end

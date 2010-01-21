@@ -8,6 +8,7 @@
 #     LITERAL            = 2;
 #     ALTERNATION        = 3;
 #     GROUPED_EXPRESSION = 4;
+#     OPTIONAL_EXPRESSION = 5;
 #   }
 # 
 #   message Production {
@@ -45,6 +46,7 @@ module Antelope
         LITERAL = 2
         ALTERNATION = 3
         GROUPED_EXPRESSION = 4
+        OPTIONAL_EXPRESSION = 5
       end
       class Production < ::Protobuf::Message
         defined_in __FILE__
