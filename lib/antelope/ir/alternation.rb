@@ -10,7 +10,7 @@ module Antelope
       def protobuf_reference
         production = Compiler::ProtocolBuffer::Production.new
         production.type = "or"
-        alternatives.map { |alternative| alternative.identifier }.each do |id|
+        alternatives.map { |alternative| alternative.hash }.each do |id|
           production.identifiers << id
         end
         production

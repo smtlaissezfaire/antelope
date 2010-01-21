@@ -43,14 +43,6 @@ module Antelope
       protobuf.grammar.rules.size.should == 2
     end
 
-    it "should store the identifier" do
-      rule = @grammar.rules.first
-      rule.stub!(:identifier).and_return 12345
-
-      protobuf = Compiler.compile(@grammar)
-      protobuf.grammar.rules.first.identifier.should == 12345
-    end
-
     describe "serializing a grammar rule" do
       describe "a rule reference" do
         before do
@@ -75,7 +67,7 @@ module Antelope
           protobuf = Compiler.compile(@grammar)
           production = protobuf.grammar.rules.first.productions.first
 
-          production.identifier.should == @rule.identifier
+          production.identifier.should == @rule.hash
         end
       end
 
@@ -96,7 +88,7 @@ module Antelope
         it "should have two ids" do
           protobuf = Compiler.compile(@grammar)
           production = protobuf.grammar.rules.first.productions.first
-          production.identifiers.should == [@rule1.identifier, @rule2.identifier]
+          production.identifiers.should == [@rule1.hash, @rule2.hash]
         end
       end
     end
