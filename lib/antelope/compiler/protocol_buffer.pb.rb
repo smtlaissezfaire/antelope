@@ -5,8 +5,7 @@
 # message ProtocolBuffer {
 #   message Production {
 #     required string type         = 1;
-#     required int32  identifier   = 2;
-#     repeated int32  identifiers  = 3;
+#     repeated int32  identifiers  = 2;
 #   }
 # 
 #   message Rule {
@@ -35,8 +34,7 @@ module Antelope
       class Production < ::Protobuf::Message
         defined_in __FILE__
         required :string, :type, 1
-        required :int32, :identifier, 2
-        repeated :int32, :identifiers, 3
+        repeated :int32, :identifiers, 2
       end
       class Rule < ::Protobuf::Message
         defined_in __FILE__

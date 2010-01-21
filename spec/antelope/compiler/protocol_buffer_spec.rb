@@ -67,7 +67,7 @@ module Antelope
           protobuf = Compiler.compile(@grammar)
           production = protobuf.grammar.rules.first.productions.first
 
-          production.identifier.should == @rule.hash
+          production.identifiers.should == [@rule.hash]
         end
       end
 
