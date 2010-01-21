@@ -6,6 +6,7 @@
 #   message Production {
 #     required string type         = 1;
 #     repeated int32  identifiers  = 2;
+#     optional string text         = 3;
 #   }
 # 
 #   message Rule {
@@ -35,6 +36,7 @@ module Antelope
         defined_in __FILE__
         required :string, :type, 1
         repeated :int32, :identifiers, 2
+        optional :string, :text, 3
       end
       class Rule < ::Protobuf::Message
         defined_in __FILE__

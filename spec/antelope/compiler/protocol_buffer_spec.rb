@@ -91,6 +91,70 @@ module Antelope
           production.identifiers.should == [@rule1.hash, @rule2.hash]
         end
       end
+
+      describe "a grouped expression A -> (B C)" do
+        before do
+          @a = IR::Rule.new("A")
+          @b = IR::Rule.new("B")
+          @c = IR::Rule.new("C")
+
+          @grammar.rules = [@a, @b, @c]
+
+          @grouped_expression = IR::GroupedExpression.new(@b, @c)
+          @a.productions = [@grouped_expression]
+        end
+
+        it "should have the type of 'and'" do
+          protobuf = Compiler.compile(@grammar)
+          production = protobuf.grammar.rules.first.productions.first
+          production.type.should == "and"
+        end
+
+        it "should have a reference to the b rule" do
+          protobuf = Compiler.compile(@grammar)
+          production = protobuf.grammar.rules.first.productions.first
+          production.identifiers.should include(@b.hash)
+        end
+
+        it "should have a reference to the c rule" do
+          protobuf = Compiler.compile(@grammar)
+          production = protobuf.grammar.rules.first.productions.first
+          production.identifiers.should include(@c.hash)
+        end
+      end
+
+      describe "a literal" do
+        before do
+          @literal = IR::Literal.new
+          @literal.text = "foo"
+
+          @rule.productions << @literal
+        end
+
+        it "should have the type as a literal" do
+          protobuf = Compiler.compile(@grammar)
+          production = protobuf.grammar.rules.first.productions.first
+          production.type.should == "literal"
+        end
+
+        it "should have the text of the literal" do
+          @literal.text = "foo"
+
+          protobuf = Compiler.compile(@grammar)
+          production = protobuf.grammar.rules.first.productions.first
+
+          production.text.should == "foo"
+        end
+
+        it "should use the correct text" do
+          @literal.text = "bar"
+
+          protobuf = Compiler.compile(@grammar)
+          production = protobuf.grammar.rules.first.productions.first
+
+          production.text.should == "bar"
+        end
+      end
     end
   end
 end

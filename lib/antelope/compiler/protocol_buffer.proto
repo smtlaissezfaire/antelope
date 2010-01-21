@@ -4,6 +4,7 @@ message ProtocolBuffer {
   message Production {
     required string type         = 1;
     repeated int32  identifiers  = 2;
+    optional string text         = 3;
   }
 
   message Rule {
