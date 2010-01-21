@@ -5,9 +5,14 @@ module Antelope
 
       def protobuf_reference
         super do |production|
-          production.type = "literal"
           production.text = text
         end
+      end
+
+    private
+
+      def type_name
+        ProductionTypes::LITERAL
       end
     end
   end

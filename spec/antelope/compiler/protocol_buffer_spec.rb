@@ -60,7 +60,7 @@ module Antelope
           protobuf = Compiler.compile(@grammar)
           production = protobuf.grammar.rules.first.productions.first
 
-          production.type.should == "reference"
+          production.type.should == Compiler::ProtocolBuffer::ProductionTypes::RULE
         end
 
         it "should have a reference to the rule id" do
@@ -82,7 +82,7 @@ module Antelope
         it "should have the type of or" do
           protobuf = Compiler.compile(@grammar)
           production = protobuf.grammar.rules.first.productions.first
-          production.type.should == "or"
+          production.type.should == Compiler::ProtocolBuffer::ProductionTypes::ALTERNATION
         end
 
         it "should have two ids" do
@@ -107,7 +107,7 @@ module Antelope
         it "should have the type of 'and'" do
           protobuf = Compiler.compile(@grammar)
           production = protobuf.grammar.rules.first.productions.first
-          production.type.should == "and"
+          production.type.should == Compiler::ProtocolBuffer::ProductionTypes::GROUPED_EXPRESSION
         end
 
         it "should have a reference to the b rule" do
@@ -134,7 +134,7 @@ module Antelope
         it "should have the type as a literal" do
           protobuf = Compiler.compile(@grammar)
           production = protobuf.grammar.rules.first.productions.first
-          production.type.should == "literal"
+          production.type.should == Compiler::ProtocolBuffer::ProductionTypes::LITERAL
         end
 
         it "should have the text of the literal" do

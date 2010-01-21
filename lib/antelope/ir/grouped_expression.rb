@@ -9,11 +9,16 @@ module Antelope
 
       def protobuf_reference
         super do |production|
-          production.type        = "and"
           expressions.each do |expression|
             production.identifiers << expression.hash
           end
         end
+      end
+
+    private
+
+      def type_name
+        ProductionTypes::GROUPED_EXPRESSION
       end
     end
   end

@@ -46,9 +46,14 @@ module Antelope
 
       def protobuf_reference
         super do |production|
-          production.type        = "reference"
           production.identifiers << hash
         end
+      end
+
+    private
+
+      def type_name
+        ProductionTypes::RULE
       end
     end
   end

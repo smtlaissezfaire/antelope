@@ -3,10 +3,17 @@
 # package antelope.compiler;
 # 
 # message ProtocolBuffer {
+#   enum ProductionTypes {
+#     RULE               = 1;
+#     LITERAL            = 2;
+#     ALTERNATION        = 3;
+#     GROUPED_EXPRESSION = 4;
+#   }
+# 
 #   message Production {
-#     required string type         = 1;
-#     repeated int32  identifiers  = 2;
-#     optional string text         = 3;
+#     required ProductionTypes type         = 1;
+#     repeated int32           identifiers  = 2;
+#     optional string          text         = 3;
 #   }
 # 
 #   message Rule {
@@ -32,9 +39,16 @@ module Antelope
   module Compiler
     class ProtocolBuffer < ::Protobuf::Message
       defined_in __FILE__
+      class ProductionTypes < ::Protobuf::Enum
+        defined_in __FILE__
+        RULE = 1
+        LITERAL = 2
+        ALTERNATION = 3
+        GROUPED_EXPRESSION = 4
+      end
       class Production < ::Protobuf::Message
         defined_in __FILE__
-        required :string, :type, 1
+        required :ProductionTypes, :type, 1
         repeated :int32, :identifiers, 2
         optional :string, :text, 3
       end

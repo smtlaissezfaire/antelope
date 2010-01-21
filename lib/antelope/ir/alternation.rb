@@ -9,11 +9,16 @@ module Antelope
 
       def protobuf_reference
         super do |production|
-          production.type = "or"
           alternatives.map { |alternative| alternative.hash }.each do |id|
             production.identifiers << id
           end
         end
+      end
+
+    private
+
+      def type_name
+        ProductionTypes::ALTERNATION
       end
     end
   end
