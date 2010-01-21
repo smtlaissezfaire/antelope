@@ -1,6 +1,6 @@
 module Antelope
   module IR
-    class Repetition
+    class Repetition < Base
       def initialize(first, *rest)
         @expressions = [first, rest].flatten
       end

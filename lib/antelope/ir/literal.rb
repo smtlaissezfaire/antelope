@@ -1,13 +1,13 @@
 module Antelope
   module IR
-    class Literal
+    class Literal < Base
       attr_accessor :text
 
       def protobuf_reference
-        production = Compiler::ProtocolBuffer::Production.new
-        production.type = "literal"
-        production.text = text
-        production
+        super do |production|
+          production.type = "literal"
+          production.text = text
+        end
       end
     end
   end

@@ -1,6 +1,6 @@
 module Antelope
   module IR
-    class Rule
+    class Rule < Base
       class << self
         def register(instance)
           instances << instance
@@ -45,10 +45,10 @@ module Antelope
       end
 
       def protobuf_reference
-        production = Compiler::ProtocolBuffer::Production.new
-        production.type        = "reference"
-        production.identifiers << hash
-        production
+        super do |production|
+          production.type        = "reference"
+          production.identifiers << hash
+        end
       end
     end
   end

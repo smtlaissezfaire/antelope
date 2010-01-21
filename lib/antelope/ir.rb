@@ -2,6 +2,7 @@ module Antelope
   module IR
     extend Using
 
+    using :Base
     using :Grammar
     using :Rule
     using :Alternation

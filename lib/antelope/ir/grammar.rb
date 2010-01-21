@@ -1,6 +1,6 @@
 module Antelope
   module IR
-    class Grammar
+    class Grammar < Base
       def initialize
         @rules             = []
         @included_grammars = []

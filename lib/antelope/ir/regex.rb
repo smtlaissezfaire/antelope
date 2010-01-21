@@ -1,6 +1,6 @@
 module Antelope
   module IR
-    class Regex
+    class Regex < Base
       attr_accessor :text
     end
   end

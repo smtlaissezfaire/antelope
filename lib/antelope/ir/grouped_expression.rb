@@ -1,6 +1,6 @@
 module Antelope
   module IR
-    class GroupedExpression
+    class GroupedExpression < Base
       def initialize(*expressions)
         @expressions = expressions
       end
@@ -8,12 +8,12 @@ module Antelope
       attr_reader :expressions
 
       def protobuf_reference
-        production = Compiler::ProtocolBuffer::Production.new
-        production.type        = "and"
-        expressions.each do |expression|
-          production.identifiers << expression.hash
+        super do |production|
+          production.type        = "and"
+          expressions.each do |expression|
+            production.identifiers << expression.hash
+          end
         end
-        production
       end
     end
   end

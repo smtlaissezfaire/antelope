@@ -1,6 +1,6 @@
 module Antelope
   module IR
-    class OptionalExpression
+    class OptionalExpression < Base
       def initialize(expression)
         @expression = expression
       end
