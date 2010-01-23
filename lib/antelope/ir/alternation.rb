@@ -9,8 +9,8 @@ module Antelope
 
       def protobuf_reference
         super do |production|
-          alternatives.map { |alternative| alternative.hash }.each do |id|
-            production.identifiers << id
+          alternatives.each do |alternative|
+            production.identifiers << alternative.hash
           end
         end
       end
