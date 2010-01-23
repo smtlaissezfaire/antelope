@@ -34,8 +34,8 @@ module Antelope
 
       def to_protobuf
         rule = Compiler::ProtocolBuffer::Rule.new
-        rule.name        = name
-        rule.identifier =  hash
+        rule.name       = name
+        rule.identifier = hash
 
         productions.each do |production|
           rule.productions << production.protobuf_reference
