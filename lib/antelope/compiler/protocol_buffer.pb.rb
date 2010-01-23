@@ -4,11 +4,12 @@
 # 
 # message ProtocolBuffer {
 #   enum ProductionTypes {
-#     RULE               = 1;
-#     LITERAL            = 2;
-#     ALTERNATION        = 3;
-#     GROUPED_EXPRESSION = 4;
+#     RULE                = 1;
+#     LITERAL             = 2;
+#     ALTERNATION         = 3;
+#     GROUPED_EXPRESSION  = 4;
 #     OPTIONAL_EXPRESSION = 5;
+#     OPTIONAL_REPETITION = 6;
 #   }
 # 
 #   message Production {
@@ -47,6 +48,7 @@ module Antelope
         ALTERNATION = 3
         GROUPED_EXPRESSION = 4
         OPTIONAL_EXPRESSION = 5
+        OPTIONAL_REPETITION = 6
       end
       class Production < ::Protobuf::Message
         defined_in __FILE__
