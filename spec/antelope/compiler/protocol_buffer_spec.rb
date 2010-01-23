@@ -10,36 +10,36 @@ module Antelope
     end
 
     it "should serialize a grammar with one rule" do
-      Compiler.compile(@grammar).should be_a_kind_of(Compiler::ProtocolBuffer)
+      Compiler.to_protocol_buffer(@grammar).should be_a_kind_of(Compiler::ProtocolBuffer)
     end
 
     it "should have the grammar name" do
-      Compiler.compile(@grammar).grammar.name.should == "Foo"
+      Compiler.to_protocol_buffer(@grammar).grammar.name.should == "Foo"
     end
 
     it "should use the correct grammar name" do
       @grammar.name = "bar"
-      Compiler.compile(@grammar).grammar.name.should == "bar"
+      Compiler.to_protocol_buffer(@grammar).grammar.name.should == "bar"
     end
 
     it "should have the first rule as the start rule" do
       @grammar.rules.first.name = "foo"
 
-      protobuf = Compiler.compile(@grammar)
+      protobuf = Compiler.to_protocol_buffer(@grammar)
       protobuf.grammar.start_rule_name.should == "foo"
     end
 
     it "should use the correct name for the start rule" do
       @grammar.rules.first.name = "bar"
 
-      protobuf = Compiler.compile(@grammar)
+      protobuf = Compiler.to_protocol_buffer(@grammar)
       protobuf.grammar.start_rule_name.should == "bar"
     end
 
     it "should serialize all of the grammar rules" do
       @grammar.rules << IR::Rule.new
 
-      protobuf = Compiler.compile(@grammar)
+      protobuf = Compiler.to_protocol_buffer(@grammar)
       protobuf.grammar.rules.size.should == 2
     end
 
@@ -52,19 +52,19 @@ module Antelope
         end
 
         it "should serialize a rule reference as a an array of one element" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           protobuf.grammar.rules.first.productions.size.should == 1
         end
 
         it "should have the type of reference" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
 
           production.type.should == Compiler::ProtocolBuffer::ProductionTypes::RULE
         end
 
         it "should have a reference to the rule id" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
 
           production.identifiers.should == [@rule.hash]
@@ -80,13 +80,13 @@ module Antelope
         end
 
         it "should have the type of or" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
           production.type.should == Compiler::ProtocolBuffer::ProductionTypes::ALTERNATION
         end
 
         it "should have two ids" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
           production.identifiers.should == [@rule1.hash, @rule2.hash]
         end
@@ -105,19 +105,19 @@ module Antelope
         end
 
         it "should have the type of 'and'" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
           production.type.should == Compiler::ProtocolBuffer::ProductionTypes::GROUPED_EXPRESSION
         end
 
         it "should have a reference to the b rule" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
           production.identifiers.should include(@b.hash)
         end
 
         it "should have a reference to the c rule" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
           production.identifiers.should include(@c.hash)
         end
@@ -132,7 +132,7 @@ module Antelope
         end
 
         it "should have the type as a literal" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
           production.type.should == Compiler::ProtocolBuffer::ProductionTypes::LITERAL
         end
@@ -140,7 +140,7 @@ module Antelope
         it "should have the text of the literal" do
           @literal.text = "foo"
 
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
 
           production.text.should == "foo"
@@ -149,7 +149,7 @@ module Antelope
         it "should use the correct text" do
           @literal.text = "bar"
 
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
 
           production.text.should == "bar"
@@ -165,13 +165,13 @@ module Antelope
         end
 
         it "should have the type" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
           production.type.should == Compiler::ProtocolBuffer::ProductionTypes::OPTIONAL_EXPRESSION
         end
 
         it "should have a reference to the expression" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
           production.identifiers.should == [@target.hash]
         end
@@ -186,13 +186,13 @@ module Antelope
         end
 
         it "should have the type" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
           production.type.should == Compiler::ProtocolBuffer::ProductionTypes::OPTIONAL_REPETITION
         end
 
         it "should have a reference to the repetition's target" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
           production.identifiers.should == [@target.hash]
         end
@@ -207,13 +207,13 @@ module Antelope
         end
 
         it "should have the type" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
           production.type.should == Compiler::ProtocolBuffer::ProductionTypes::REPETITION
         end
 
         it "should have a reference to the repetition's target" do
-          protobuf = Compiler.compile(@grammar)
+          protobuf = Compiler.to_protocol_buffer(@grammar)
           production = protobuf.grammar.rules.first.productions.first
           production.identifiers.should == [@target.hash]
         end

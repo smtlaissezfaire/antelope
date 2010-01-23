@@ -4,7 +4,7 @@ module Antelope
 
     using :ProtocolBuffer, :file => "protocol_buffer.pb.rb"
 
-    def self.compile(grammar)
+    def self.to_protocol_buffer(grammar)
       buffer = ProtocolBuffer.new
       buffer.grammar = grammar.to_protobuf
       buffer
