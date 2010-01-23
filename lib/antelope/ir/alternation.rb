@@ -18,7 +18,7 @@ module Antelope
     private
 
       def type_name
-        ProductionTypes::ALTERNATION
+        NodeTypes::ALTERNATION
       end
     end
   end

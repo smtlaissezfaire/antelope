@@ -16,7 +16,7 @@ module Antelope
     private
 
       def type_name
-        ProductionTypes::REPETITION
+        NodeTypes::REPETITION
       end
     end
   end

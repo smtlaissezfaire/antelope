@@ -53,7 +53,7 @@ module Antelope
     private
 
       def type_name
-        ProductionTypes::RULE
+        NodeTypes::RULE
       end
     end
   end

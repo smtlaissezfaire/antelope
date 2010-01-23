@@ -61,7 +61,7 @@ module Antelope
             protobuf = Compiler.to_protocol_buffer(@grammar)
             production = protobuf.grammar.rules.first.productions.first
 
-            production.type.should == Compiler::ProtocolBuffer::ProductionTypes::RULE
+            production.type.should == Compiler::ProtocolBuffer::NodeTypes::RULE
           end
 
           it "should have a reference to the rule id" do
@@ -83,7 +83,7 @@ module Antelope
           it "should have the type of or" do
             protobuf = Compiler.to_protocol_buffer(@grammar)
             production = protobuf.grammar.rules.first.productions.first
-            production.type.should == Compiler::ProtocolBuffer::ProductionTypes::ALTERNATION
+            production.type.should == Compiler::ProtocolBuffer::NodeTypes::ALTERNATION
           end
 
           it "should have two ids" do
@@ -108,7 +108,7 @@ module Antelope
           it "should have the type of 'and'" do
             protobuf = Compiler.to_protocol_buffer(@grammar)
             production = protobuf.grammar.rules.first.productions.first
-            production.type.should == Compiler::ProtocolBuffer::ProductionTypes::GROUPED_EXPRESSION
+            production.type.should == Compiler::ProtocolBuffer::NodeTypes::GROUPED_EXPRESSION
           end
 
           it "should have a reference to the b rule" do
@@ -135,7 +135,7 @@ module Antelope
           it "should have the type as a literal" do
             protobuf = Compiler.to_protocol_buffer(@grammar)
             production = protobuf.grammar.rules.first.productions.first
-            production.type.should == Compiler::ProtocolBuffer::ProductionTypes::LITERAL
+            production.type.should == Compiler::ProtocolBuffer::NodeTypes::LITERAL
           end
 
           it "should have the text of the literal" do
@@ -168,7 +168,7 @@ module Antelope
           it "should have the type" do
             protobuf = Compiler.to_protocol_buffer(@grammar)
             production = protobuf.grammar.rules.first.productions.first
-            production.type.should == Compiler::ProtocolBuffer::ProductionTypes::OPTIONAL_EXPRESSION
+            production.type.should == Compiler::ProtocolBuffer::NodeTypes::OPTIONAL_EXPRESSION
           end
 
           it "should have a reference to the expression" do
@@ -189,7 +189,7 @@ module Antelope
           it "should have the type" do
             protobuf = Compiler.to_protocol_buffer(@grammar)
             production = protobuf.grammar.rules.first.productions.first
-            production.type.should == Compiler::ProtocolBuffer::ProductionTypes::OPTIONAL_REPETITION
+            production.type.should == Compiler::ProtocolBuffer::NodeTypes::OPTIONAL_REPETITION
           end
 
           it "should have a reference to the repetition's target" do
@@ -210,7 +210,7 @@ module Antelope
           it "should have the type" do
             protobuf = Compiler.to_protocol_buffer(@grammar)
             production = protobuf.grammar.rules.first.productions.first
-            production.type.should == Compiler::ProtocolBuffer::ProductionTypes::REPETITION
+            production.type.should == Compiler::ProtocolBuffer::NodeTypes::REPETITION
           end
 
           it "should have a reference to the repetition's target" do

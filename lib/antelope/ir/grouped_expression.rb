@@ -18,7 +18,7 @@ module Antelope
     private
 
       def type_name
-        ProductionTypes::GROUPED_EXPRESSION
+        NodeTypes::GROUPED_EXPRESSION
       end
     end
   end

@@ -1,7 +1,7 @@
 package antelope.compiler;
 
 message ProtocolBuffer {
-  enum ProductionTypes {
+  enum NodeTypes {
     RULE                = 1;
     LITERAL             = 2;
     ALTERNATION         = 3;
@@ -11,16 +11,16 @@ message ProtocolBuffer {
     REPETITION          = 7;
   }
 
-  message Production {
-    required ProductionTypes type         = 1;
-    repeated int32           identifiers  = 2;
-    optional string          text         = 3;
+  message Node {
+    required NodeTypes type         = 1;
+    repeated int32     identifiers  = 2;
+    optional string    text         = 3;
   }
 
   message Rule {
-    required int32      identifier   = 1;
-    required string     name         = 2;
-    repeated Production productions  = 3;
+    required int32  identifier   = 1;
+    required string name         = 2;
+    repeated Node   productions  = 3;
   }
 
   message Grammar {

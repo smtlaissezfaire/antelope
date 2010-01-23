@@ -5,7 +5,7 @@ module Antelope
     private
 
       def type_name
-        ProductionTypes::OPTIONAL_REPETITION
+        NodeTypes::OPTIONAL_REPETITION
       end
     end
   end

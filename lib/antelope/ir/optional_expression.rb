@@ -16,7 +16,7 @@ module Antelope
     private
 
       def type_name
-        ProductionTypes::OPTIONAL_EXPRESSION
+        NodeTypes::OPTIONAL_EXPRESSION
       end
     end
   end

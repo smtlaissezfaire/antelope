@@ -3,7 +3,7 @@
 # package antelope.compiler;
 # 
 # message ProtocolBuffer {
-#   enum ProductionTypes {
+#   enum NodeTypes {
 #     RULE                = 1;
 #     LITERAL             = 2;
 #     ALTERNATION         = 3;
@@ -13,16 +13,16 @@
 #     REPETITION          = 7;
 #   }
 # 
-#   message Production {
-#     required ProductionTypes type         = 1;
-#     repeated int32           identifiers  = 2;
-#     optional string          text         = 3;
+#   message Node {
+#     required NodeTypes type         = 1;
+#     repeated int32     identifiers  = 2;
+#     optional string    text         = 3;
 #   }
 # 
 #   message Rule {
-#     required int32      identifier   = 1;
-#     required string     name         = 2;
-#     repeated Production productions  = 3;
+#     required int32  identifier   = 1;
+#     required string name         = 2;
+#     repeated Node   productions  = 3;
 #   }
 # 
 #   message Grammar {
@@ -42,7 +42,7 @@ module Antelope
   module Compiler
     class ProtocolBuffer < ::Protobuf::Message
       defined_in __FILE__
-      class ProductionTypes < ::Protobuf::Enum
+      class NodeTypes < ::Protobuf::Enum
         defined_in __FILE__
         RULE = 1
         LITERAL = 2
@@ -52,9 +52,9 @@ module Antelope
         OPTIONAL_REPETITION = 6
         REPETITION = 7
       end
-      class Production < ::Protobuf::Message
+      class Node < ::Protobuf::Message
         defined_in __FILE__
-        required :ProductionTypes, :type, 1
+        required :NodeTypes, :type, 1
         repeated :int32, :identifiers, 2
         optional :string, :text, 3
       end
@@ -62,7 +62,7 @@ module Antelope
         defined_in __FILE__
         required :int32, :identifier, 1
         required :string, :name, 2
-        repeated :Production, :productions, 3
+        repeated :Node, :productions, 3
       end
       class Grammar < ::Protobuf::Message
         defined_in __FILE__

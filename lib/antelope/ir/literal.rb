@@ -12,7 +12,7 @@ module Antelope
     private
 
       def type_name
-        ProductionTypes::LITERAL
+        NodeTypes::LITERAL
       end
     end
   end
