@@ -1,11 +1,6 @@
 module Antelope
   module IR
     class OptionalRepetition < Repetition
-      def protobuf_reference
-        super do |production|
-          production.identifiers << expression.hash
-        end
-      end
 
     private
 

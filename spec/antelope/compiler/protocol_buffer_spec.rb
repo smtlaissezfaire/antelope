@@ -180,15 +180,36 @@ module Antelope
       describe "optional repetition" do
         before do
           @target = IR::Literal.new
-          @kleen = IR::OptionalRepetition.new(@target)
+          @optional_repetition = IR::OptionalRepetition.new(@target)
 
-          @rule.productions << @kleen
+          @rule.productions << @optional_repetition
         end
 
         it "should have the type" do
           protobuf = Compiler.compile(@grammar)
           production = protobuf.grammar.rules.first.productions.first
           production.type.should == Compiler::ProtocolBuffer::ProductionTypes::OPTIONAL_REPETITION
+        end
+
+        it "should have a reference to the repetition's target" do
+          protobuf = Compiler.compile(@grammar)
+          production = protobuf.grammar.rules.first.productions.first
+          production.identifiers.should == [@target.hash]
+        end
+      end
+
+      describe "a repetition" do
+        before do
+          @target = IR::Literal.new
+          @optional_repetition = IR::Repetition.new(@target)
+
+          @rule.productions << @optional_repetition
+        end
+
+        it "should have the type" do
+          protobuf = Compiler.compile(@grammar)
+          production = protobuf.grammar.rules.first.productions.first
+          production.type.should == Compiler::ProtocolBuffer::ProductionTypes::REPETITION
         end
 
         it "should have a reference to the repetition's target" do

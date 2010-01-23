@@ -10,6 +10,7 @@
 #     GROUPED_EXPRESSION  = 4;
 #     OPTIONAL_EXPRESSION = 5;
 #     OPTIONAL_REPETITION = 6;
+#     REPETITION          = 7;
 #   }
 # 
 #   message Production {
@@ -49,6 +50,7 @@ module Antelope
         GROUPED_EXPRESSION = 4
         OPTIONAL_EXPRESSION = 5
         OPTIONAL_REPETITION = 6
+        REPETITION = 7
       end
       class Production < ::Protobuf::Message
         defined_in __FILE__
