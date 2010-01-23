@@ -14,21 +14,22 @@
 #   }
 # 
 #   message Node {
-#     required NodeTypes type         = 1;
-#     repeated int32     identifiers  = 2;
-#     optional string    text         = 3;
+#     required int32     identifier   = 1;
+#     required NodeTypes type         = 2;
+#     repeated int32     references   = 3;
+#     optional string    text         = 4;
 #   }
 # 
 #   message Rule {
-#     required int32  identifier   = 1;
-#     required string name         = 2;
-#     repeated Node   productions  = 3;
+#     required int32  identifier  = 1;
+#     required string name        = 2;
 #   }
 # 
 #   message Grammar {
-#     required string name            = 1;
-#     required string start_rule_name = 2;
-#     repeated Rule   rules           = 3;
+#     required string name       = 1;
+#     required int32  start_rule = 2;
+#     repeated Rule   rules      = 3;
+#     repeated Node   nodes      = 4;
 #   }
 # 
 #   required Grammar grammar = 1;
@@ -54,21 +55,22 @@ module Antelope
       end
       class Node < ::Protobuf::Message
         defined_in __FILE__
-        required :NodeTypes, :type, 1
-        repeated :int32, :identifiers, 2
-        optional :string, :text, 3
+        required :int32, :identifier, 1
+        required :NodeTypes, :type, 2
+        repeated :int32, :references, 3
+        optional :string, :text, 4
       end
       class Rule < ::Protobuf::Message
         defined_in __FILE__
         required :int32, :identifier, 1
         required :string, :name, 2
-        repeated :Node, :productions, 3
       end
       class Grammar < ::Protobuf::Message
         defined_in __FILE__
         required :string, :name, 1
-        required :string, :start_rule_name, 2
+        required :int32, :start_rule, 2
         repeated :Rule, :rules, 3
+        repeated :Node, :nodes, 4
       end
       required :Grammar, :grammar, 1
     end

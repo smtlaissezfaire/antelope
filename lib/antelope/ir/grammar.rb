@@ -21,12 +21,24 @@ module Antelope
 
       def to_protobuf
         grammar = Compiler::ProtocolBuffer::Grammar.new
-        grammar.name = name
-        grammar.start_rule_name = start_rule.name
-        rules.each do |rule|
-          grammar.rules << rule.to_protobuf
-        end
+        grammar.name       = name
+        grammar.start_rule = start_rule.hash
+        add_grammar_rules(grammar)
         grammar
+      end
+
+      def add_grammar_rules(grammar)
+        if start_rule
+          rules, nodes = start_rule.to_protobuf
+
+          rules.each do |rule|
+            grammar.rules << rule
+          end
+
+          nodes.each do |node|
+            grammar.nodes << node
+          end
+        end
       end
 
     private

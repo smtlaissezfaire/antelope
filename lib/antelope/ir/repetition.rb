@@ -7,9 +7,9 @@ module Antelope
 
       attr_reader :expression
 
-      def protobuf_reference
-        super do |production|
-          production.identifiers << expression.hash
+      def to_protobuf
+        super do |rules, nodes|
+          add_self_and_children(rules, nodes)
         end
       end
 

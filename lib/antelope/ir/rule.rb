@@ -33,21 +33,28 @@ module Antelope
       attr_accessor :productions
 
       def to_protobuf
-        rule = Compiler::ProtocolBuffer::Rule.new
-        rule.name       = name
-        rule.identifier = hash
+        rules = [protobuf_rule]
+        nodes = [my_node = protobuf_node]
 
         productions.each do |production|
-          rule.productions << production.protobuf_reference
+          children_rules, children_nodes = production.to_protobuf
+
+          children_rules.each do |child_rule|
+            my_node.references << child_rule.identifier
+          end
+
+          rules.concat(children_rules)
+          nodes.concat(children_nodes)
         end
 
-        rule
+        [rules, nodes]
       end
 
-      def protobuf_reference
-        super do |production|
-          production.identifiers << hash
-        end
+      def protobuf_rule
+        rule = Compiler::ProtocolBuffer::Rule.new
+        rule.name = name
+        rule.identifier = hash
+        rule
       end
 
     private

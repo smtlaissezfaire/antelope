@@ -3,9 +3,15 @@ module Antelope
     class Literal < Base
       attr_accessor :text
 
-      def protobuf_reference
-        super do |production|
-          production.text = text
+      def to_protobuf
+        super do |_, nodes|
+          nodes << protobuf_node
+        end
+      end
+
+      def protobuf_node
+        super do |node|
+          node.text = text
         end
       end
 

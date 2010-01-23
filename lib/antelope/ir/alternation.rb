@@ -7,10 +7,15 @@ module Antelope
 
       attr_reader :alternatives
 
-      def protobuf_reference
-        super do |production|
+      def to_protobuf
+        super do |rules, nodes|
+          nodes << protobuf_node
+
           alternatives.each do |alternative|
-            production.identifiers << alternative.hash
+            children_rules, children_nodes = alternative.to_protobuf
+
+            rules.concat(children_rules)
+            nodes.concat(children_nodes)
           end
         end
       end

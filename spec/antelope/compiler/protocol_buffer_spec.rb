@@ -6,218 +6,280 @@ module Antelope
       before do
         @grammar = IR::Grammar.new
         @grammar.name = "Foo"
-        @grammar.rules << IR::Rule.new
-        @rule = @grammar.rules.first
       end
 
-      it "should serialize a grammar with one rule" do
-        Compiler.to_protocol_buffer(@grammar).should be_a_kind_of(Compiler::ProtocolBuffer)
+      def protocol_buffer
+        Compiler.to_protocol_buffer(@grammar)
       end
 
-      it "should have the grammar name" do
-        Compiler.to_protocol_buffer(@grammar).grammar.name.should == "Foo"
+      def protocol_buffer_rules
+        protocol_buffer.grammar.rules
       end
 
-      it "should use the correct grammar name" do
-        @grammar.name = "bar"
-        Compiler.to_protocol_buffer(@grammar).grammar.name.should == "bar"
+      def protocol_buffer_nodes
+        protocol_buffer.grammar.nodes
       end
 
-      it "should have the first rule as the start rule" do
-        @grammar.rules.first.name = "foo"
+      describe "serializing the grammar" do
+        it "should set the grammar name" do
+          protocol_buffer.grammar.name.should == @grammar.name
+        end
 
-        protobuf = Compiler.to_protocol_buffer(@grammar)
-        protobuf.grammar.start_rule_name.should == "foo"
-      end
-
-      it "should use the correct name for the start rule" do
-        @grammar.rules.first.name = "bar"
-
-        protobuf = Compiler.to_protocol_buffer(@grammar)
-        protobuf.grammar.start_rule_name.should == "bar"
-      end
-
-      it "should serialize all of the grammar rules" do
-        @grammar.rules << IR::Rule.new
-
-        protobuf = Compiler.to_protocol_buffer(@grammar)
-        protobuf.grammar.rules.size.should == 2
+        it "should have a reference to the start rule" do
+          protocol_buffer.grammar.start_rule.should == @grammar.start_rule.hash
+        end
       end
 
       describe "serializing a grammar rule" do
-        describe "a rule reference" do
+        before do
+          @rule = IR::Rule.new("first_rule")
+          @grammar.rules << @rule
+        end
+
+        it "should add a rule to the grammar" do
+          rules = protocol_buffer_rules
+          rules.size.should == 1
+        end
+
+        it "should add a node to the grammar" do
+          nodes = protocol_buffer_nodes
+          nodes.size.should == 1
+        end
+
+        describe "the rule" do
           before do
-            @rule = IR::Rule.new
-            @rule.name = "Foo"
-            @grammar.rules.first.productions << @rule
+            @grammar_rule = protocol_buffer_rules.first
           end
 
-          it "should serialize a rule reference as a an array of one element" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            protobuf.grammar.rules.first.productions.size.should == 1
+          it "should store the identifier" do
+            @grammar_rule.identifier.should == @rule.hash
           end
 
-          it "should have the type of reference" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-
-            production.type.should == Compiler::ProtocolBuffer::NodeTypes::RULE
-          end
-
-          it "should have a reference to the rule id" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-
-            production.identifiers.should == [@rule.hash]
+          it "should have a name" do
+            @grammar_rule.name.should == @rule.name
           end
         end
 
-        describe "an or expression" do
+        describe "the node" do
           before do
-            @rule1 = IR::Rule.new(:name => "foo")
-            @rule2 = IR::Rule.new(:name => "bar")
-            alternation = IR::Alternation.new(@rule1, @rule2)
-            @rule.productions << alternation
+            @node = protocol_buffer_nodes.first
           end
 
-          it "should have the type of or" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-            production.type.should == Compiler::ProtocolBuffer::NodeTypes::ALTERNATION
+          it "should have an empty list of references" do
+            @node.references.should == []
           end
 
-          it "should have two ids" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-            production.identifiers.should == [@rule1.hash, @rule2.hash]
+          it "should have the reference identifier" do
+            @node.identifier.should == @rule.hash
+          end
+
+          it "should have the reference type" do
+            @node.type.should == Compiler::ProtocolBuffer::NodeTypes::RULE
+          end
+        end
+      end
+
+      describe "serializing A -> B" do
+        before do
+          @rule_a = IR::Rule.new("A")
+          @rule_b = IR::Rule.new("B")
+
+          @rule_a.productions << @rule_b
+
+          @grammar.rules << @rule_a
+
+          @grammar.start_symbol = "A"
+        end
+
+        it "should have two grammar rules" do
+          protocol_buffer_rules.size.should == 2
+        end
+
+        it "should have two nodes" do
+          protocol_buffer_nodes.size.should == 2
+        end
+
+        describe "the parent node" do
+          it "should have a reference to the child node" do
+            parent = protocol_buffer_nodes.first
+            child  = protocol_buffer_nodes.last
+
+            parent.references.should == [child.identifier]
           end
         end
 
-        describe "a grouped expression A -> (B C)" do
+        describe "the child node" do
           before do
-            @a = IR::Rule.new("A")
-            @b = IR::Rule.new("B")
-            @c = IR::Rule.new("C")
-
-            @grammar.rules = [@a, @b, @c]
-
-            @grouped_expression = IR::GroupedExpression.new(@b, @c)
-            @a.productions = [@grouped_expression]
+            @child_node = protocol_buffer_nodes.last
           end
 
-          it "should have the type of 'and'" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-            production.type.should == Compiler::ProtocolBuffer::NodeTypes::GROUPED_EXPRESSION
+          it "should have no references" do
+            @child_node.references.should == []
           end
 
-          it "should have a reference to the b rule" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-            production.identifiers.should include(@b.hash)
+          it "should have type = RULE" do
+            @child_node.type.should == Compiler::ProtocolBuffer::NodeTypes::RULE
           end
 
-          it "should have a reference to the c rule" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-            production.identifiers.should include(@c.hash)
+          it "should have the id" do
+            @child_node.identifier.should == @rule_b.hash
           end
         end
+      end
 
-        describe "a literal" do
+      describe "serializing A | B" do
+        before do
+          @rule_a = IR::Rule.new("A")
+          @rule_b = IR::Rule.new("B")
+          @parent = IR::Alternation.new(@rule_a, @rule_b)
+          @start_rule = IR::Rule.new("start_rule")
+          @start_rule.productions << @parent
+
+          @grammar.rules << @start_rule
+          @grammar.start_symbol = "start_rule"
+        end
+
+        it "should have 3 rules - the start rule and the two children" do
+          protocol_buffer_rules.size.should == 3
+        end
+
+        it "should have 4 nodes - the start rule, the OR, and the children" do
+          protocol_buffer_nodes.size.should == 4
+        end
+
+        describe "the node" do
+          def node
+            protocol_buffer_nodes.detect do |node|
+              node.type == Compiler::ProtocolBuffer::NodeTypes::ALTERNATION
+            end
+          end
+
+          it "should have the correct type" do
+            node.type.should == Compiler::ProtocolBuffer::NodeTypes::ALTERNATION
+          end
+
+          it "should have the identifier" do
+            node.identifier.should == @parent.hash
+          end
+        end
+      end
+
+      describe "a literal A -> 'some_text'" do
+        before do
+          @rule = IR::Rule.new
+          @grammar.rules << @rule
+
+          @literal = IR::Literal.new
+          @literal.text = "foo"
+
+          @rule.productions << @literal
+        end
+
+        it "should have two nodes - the first rule, and the literal" do
+          protocol_buffer_nodes.size.should == 2
+        end
+
+        it "should have one rule" do
+          protocol_buffer_rules.size.should == 1
+        end
+
+        describe "the node" do
           before do
-            @literal = IR::Literal.new
-            @literal.text = "foo"
-
-            @rule.productions << @literal
+            @node = protocol_buffer_nodes.last
           end
 
           it "should have the type as a literal" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-            production.type.should == Compiler::ProtocolBuffer::NodeTypes::LITERAL
+            @node.type.should == Compiler::ProtocolBuffer::NodeTypes::LITERAL
           end
 
           it "should have the text of the literal" do
-            @literal.text = "foo"
-
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-
-            production.text.should == "foo"
+            @node.text.should == "foo"
           end
 
-          it "should use the correct text" do
-            @literal.text = "bar"
-
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-
-            production.text.should == "bar"
+          it "should use the id" do
+            @node.identifier.should == @literal.hash
           end
         end
+      end
 
-        describe "an optional expression" do
-          before do
-            @target = IR::Literal.new
+      describe "an optional expression A -> B?" do
+        before do
+          @rule_a = IR::Rule.new("A")
+          @rule_b = IR::Rule.new("B")
+          @optional_expression = IR::OptionalExpression.new(@rule_b)
 
-            @optional = IR::OptionalExpression.new(@target)
-            @rule.productions << @optional
-          end
+          @rule_a.productions << @optional_expression
 
-          it "should have the type" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-            production.type.should == Compiler::ProtocolBuffer::NodeTypes::OPTIONAL_EXPRESSION
-          end
-
-          it "should have a reference to the expression" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-            production.identifiers.should == [@target.hash]
-          end
+          @grammar.rules << @rule_a
         end
 
-        describe "optional repetition" do
-          before do
-            @target = IR::Literal.new
-            @optional_repetition = IR::OptionalRepetition.new(@target)
-
-            @rule.productions << @optional_repetition
-          end
-
-          it "should have the type" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-            production.type.should == Compiler::ProtocolBuffer::NodeTypes::OPTIONAL_REPETITION
-          end
-
-          it "should have a reference to the repetition's target" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-            production.identifiers.should == [@target.hash]
-          end
+        it "should have two grammar rules" do
+          protocol_buffer_rules.size.should == 2
         end
 
-        describe "a repetition" do
-          before do
-            @target = IR::Literal.new
-            @optional_repetition = IR::Repetition.new(@target)
+        it "should have three nodes" do
+          protocol_buffer_nodes.size.should == 3
+        end
+      end
 
-            @rule.productions << @optional_repetition
-          end
+      describe "an optional repetition: A -> B*" do
+        before do
+          @rule_a = IR::Rule.new("A")
+          @rule_b = IR::Rule.new("B")
+          @optional_repetition = IR::OptionalRepetition.new(@rule_b)
 
-          it "should have the type" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-            production.type.should == Compiler::ProtocolBuffer::NodeTypes::REPETITION
-          end
+          @rule_a.productions << @optional_repetition
 
-          it "should have a reference to the repetition's target" do
-            protobuf = Compiler.to_protocol_buffer(@grammar)
-            production = protobuf.grammar.rules.first.productions.first
-            production.identifiers.should == [@target.hash]
-          end
+          @grammar.rules << @rule_a
+        end
+
+        it "should have two grammar rules" do
+          protocol_buffer_rules.size.should == 2
+        end
+
+        it "should have three nodes" do
+          protocol_buffer_nodes.size.should == 3
+        end
+      end
+
+      describe "a repetition: A -> B+" do
+        before do
+          @rule_a = IR::Rule.new("A")
+          @rule_b = IR::Rule.new("B")
+          @repetition = IR::Repetition.new(@rule_b)
+
+          @rule_a.productions << @repetition
+          @grammar.rules << @rule_a
+        end
+
+        it "should have two grammar rules" do
+          protocol_buffer_rules.size.should == 2
+        end
+
+        it "should have three nodes" do
+          protocol_buffer_nodes.size.should == 3
+        end
+      end
+
+      describe "a grouped expression A -> (B C)" do
+        before do
+          @a = IR::Rule.new("A")
+          @b = IR::Rule.new("B")
+          @c = IR::Rule.new("C")
+
+          @grammar.rules = [@a, @b, @c]
+
+          @grouped_expression = IR::GroupedExpression.new(@b, @c)
+
+          @a.productions << @grouped_expression
+        end
+
+        it "should have three grammar rules" do
+          protocol_buffer_rules.size.should == 3
+        end
+
+        it "should have 4 nodes" do
+          protocol_buffer_nodes.size.should == 4
         end
       end
     end
