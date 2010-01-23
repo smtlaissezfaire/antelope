@@ -1,11 +1,11 @@
 module Antelope
   module IR
     class Repetition < Base
-      def initialize(first, *rest)
-        @expressions = [first, rest].flatten
+      def initialize(first)
+        @expression = first
       end
 
-      attr_reader :expressions
+      attr_reader :expression
     end
   end
 end

@@ -1,15 +1,9 @@
 module Antelope
   module IR
     class OptionalRepetition < Repetition
-      def initialize(first, *rest)
-        @expressions = [first, rest].flatten
-      end
-
-      attr_reader :expressions
-
       def protobuf_reference
         super do |production|
-          production.identifiers << expressions.first.hash
+          production.identifiers << expression.hash
         end
       end
 

@@ -238,7 +238,7 @@ module Antelope
 
           repetition = rule.productions.first
 
-          repetition.expressions.first.should be_a_kind_of(IR::Literal)
+          repetition.expression.should be_a_kind_of(IR::Literal)
         end
 
         it "should parse a star as an optional repetition" do
@@ -254,7 +254,7 @@ module Antelope
 
           expression = rule.productions.first
 
-          expression.expressions.first.should be_a_kind_of(IR::Literal)
+          expression.expression.should be_a_kind_of(IR::Literal)
         end
       end
     end
