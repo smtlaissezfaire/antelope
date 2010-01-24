@@ -19,8 +19,8 @@ module Antelope
         rules.detect { |rule| rule.name == start_symbol } || rules.first
       end
 
-      def to_protobuf
-        grammar = Compiler::ProtocolBuffer::Grammar.new
+      def to_json
+        grammar = Compiler::EncodedGrammar.new
         grammar.name       = name
         grammar.start_rule = start_rule.hash
         add_grammar_rules(grammar)
@@ -29,7 +29,7 @@ module Antelope
 
       def add_grammar_rules(grammar)
         if start_rule
-          rules, nodes = start_rule.to_protobuf
+          rules, nodes = start_rule.to_json
 
           rules.each do |rule|
             grammar.rules << rule

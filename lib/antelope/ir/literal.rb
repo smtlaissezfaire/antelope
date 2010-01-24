@@ -3,13 +3,13 @@ module Antelope
     class Literal < Base
       attr_accessor :text
 
-      def to_protobuf
+      def to_json
         super do |_, nodes|
-          nodes << protobuf_node
+          nodes << json_node
         end
       end
 
-      def protobuf_node
+      def json_node
         super do |node|
           node.text = text
         end
@@ -18,7 +18,7 @@ module Antelope
     private
 
       def type_name
-        NodeTypes::LITERAL
+        LITERAL
       end
     end
   end

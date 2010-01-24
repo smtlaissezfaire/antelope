@@ -7,12 +7,12 @@ module Antelope
 
       attr_reader :alternatives
 
-      def to_protobuf
+      def to_json
         super do |rules, nodes|
-          nodes << protobuf_node
+          nodes << json_node
 
           alternatives.each do |alternative|
-            children_rules, children_nodes = alternative.to_protobuf
+            children_rules, children_nodes = alternative.to_json
 
             rules.concat(children_rules)
             nodes.concat(children_nodes)
@@ -23,7 +23,7 @@ module Antelope
     private
 
       def type_name
-        NodeTypes::ALTERNATION
+        ALTERNATION
       end
     end
   end

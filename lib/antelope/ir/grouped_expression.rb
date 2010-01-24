@@ -7,7 +7,7 @@ module Antelope
 
       attr_reader :expressions
 
-      def to_protobuf
+      def to_json
         super do |rules, nodes|
           add_self_and_children(rules, nodes)
         end
@@ -16,7 +16,7 @@ module Antelope
     private
 
       def type_name
-        NodeTypes::GROUPED_EXPRESSION
+        GROUPED_EXPRESSION
       end
     end
   end

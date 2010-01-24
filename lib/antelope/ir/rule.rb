@@ -32,12 +32,12 @@ module Antelope
       attr_accessor :name
       attr_accessor :productions
 
-      def to_protobuf
-        rules = [protobuf_rule]
-        nodes = [my_node = protobuf_node]
+      def to_json
+        rules = [json_rule]
+        nodes = [my_node = json_node]
 
         productions.each do |production|
-          children_rules, children_nodes = production.to_protobuf
+          children_rules, children_nodes = production.to_json
 
           children_rules.each do |child_rule|
             my_node.references << child_rule.identifier
@@ -50,8 +50,8 @@ module Antelope
         [rules, nodes]
       end
 
-      def protobuf_rule
-        rule = Compiler::ProtocolBuffer::Rule.new
+      def json_rule
+        rule = Compiler::EncodedGrammar::Rule.new
         rule.name = name
         rule.identifier = hash
         rule
@@ -60,7 +60,7 @@ module Antelope
     private
 
       def type_name
-        NodeTypes::RULE
+        RULE
       end
     end
   end

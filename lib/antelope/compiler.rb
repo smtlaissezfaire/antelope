@@ -2,20 +2,18 @@ module Antelope
   module Compiler
     extend Using
 
-    using :ProtocolBuffer, :file => "protocol_buffer.pb.rb"
+    using :EncodedGrammar
 
-    def self.to_protocol_buffer(grammar)
-      buffer = ProtocolBuffer.new
-      buffer.grammar = grammar.to_protobuf
-      buffer
+    def self.to_json(grammar)
+      grammar.to_json
     end
 
     def self.compile(grammar, a_file = nil)
-      protobuf = to_protocol_buffer(grammar)
+      json = to_json(grammar)
 
       a_file ?
-        protobuf.serialize_to_file(a_file) :
-        protobuf.serialize_to_string
+        json.serialize_to_file(a_file) :
+        json.serialize_to_string
     end
   end
 end

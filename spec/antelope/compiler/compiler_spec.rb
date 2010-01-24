@@ -4,38 +4,38 @@ module Antelope
   describe Compiler do
     before do
       @grammar = mock 'grammar'
-      @protobuf = mock 'protobuf'
-      Compiler.stub!(:to_protocol_buffer).and_return @protobuf
+      @json = mock 'json'
+      Compiler.stub!(:to_json).and_return @json
     end
 
     describe "compiling a grammar to a string" do
       before do
-        @protobuf.stub!(:serialize_to_string).and_return "serialized_string"
+        @json.stub!(:serialize_to_string).and_return "serialized_string"
       end
 
       it "should compile the grammar to a protocol buffer" do
-        Compiler.should_receive(:to_protocol_buffer).and_return @protobuf
+        Compiler.should_receive(:to_json).and_return @json
         Compiler.compile(@grammar)
       end
 
       it "should output a string for the protocol buffer" do
-        @protobuf.should_receive(:serialize_to_string).and_return "serialized_string"
+        @json.should_receive(:serialize_to_string).and_return "serialized_string"
         Compiler.compile(@grammar).should == "serialized_string"
       end
     end
 
     describe "compiling a grammar to a file" do
       before do
-        @protobuf.stub!(:serialize_to_file)
+        @json.stub!(:serialize_to_file)
       end
 
       it "should serialize the protocol buffer" do
-        Compiler.should_receive(:to_protocol_buffer).and_return @protobuf
+        Compiler.should_receive(:to_json).and_return @json
         Compiler.compile(@grammar, "a_file")
       end
 
       it "should serialize the protocol buffer to a file" do
-        @protobuf.should_receive(:serialize_to_file).with("a_file")
+        @json.should_receive(:serialize_to_file).with("a_file")
         Compiler.compile(@grammar, "a_file")
       end
     end
