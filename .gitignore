@@ -4,3 +4,6 @@ tmp/
 TAGS
 doc
 pkg
+
+ext/antelope/antelope_spec.c
+ext/antelope/bin
