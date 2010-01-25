@@ -1,12 +1,13 @@
-CC           = gcc
-CFLAGS       = -std=c99 -W -Wall
-BIN_DIR      = bin
-BIN_FILE     = $(BIN_DIR)/antelope
-SOURCE_FILES = antelope.c
-OBJECT_FILES = antelope.o cspec.o
-SPEC_BIN     = $(BIN_DIR)/spec
-SPECC_FILE   = antelope_spec.c
-CSPEC_DIR    = dependencies/cspec
+CC                = gcc
+CFLAGS            = -std=c99 -W -Wall
+BIN_DIR           = bin
+BIN_FILE          = $(BIN_DIR)/antelope
+SOURCE_FILES      = antelope.c
+OBJECT_FILES      = antelope.o
+SPEC_OBJECT_FILES = $(OBJECT_FILES) cspec.o
+SPEC_BIN          = $(BIN_DIR)/spec
+SPECC_FILE        = antelope_spec.c
+CSPEC_DIR         = dependencies/cspec
 
 all: compile spec
 
@@ -19,6 +20,7 @@ spec: compile_spec
 clean:
 	rm -rf $(BIN_DIR)
 	rm -rf $(SPECC_FILE)
+	rm -rf $(OBJECT_FILES)
 
 mkbin:
 	mkdir -p $(BIN_DIR)
@@ -27,7 +29,7 @@ compile_cspec:
 	cspec < antelope.spec > $(SPECC_FILE)
 
 compile_spec: mkbin compile compile_cspec
-	$(CC) $(SPECC_FILE) $(OBJECT_FILES) -o $(SPEC_BIN) $(CFLAGS)
+	$(CC) $(SPECC_FILE) $(SPEC_OBJECT_FILES) -o $(SPEC_BIN) $(CFLAGS)
 
 install_cspec:
 	cd $(CSPEC_DIR); make
