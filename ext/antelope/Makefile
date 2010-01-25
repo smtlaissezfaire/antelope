@@ -34,7 +34,7 @@ compile_spec: mkbin compile compile_cspec
 install_cspec:
 	cd $(CSPEC_DIR); make
 	cp $(CSPEC_DIR)/src/cspec.h .
-	sudo cp $(CSPEC_DIR)/build/cspec.o .
+	cp $(CSPEC_DIR)/build/cspec.o .
 
 clean_cspec:
 	cd dependencies/cspec; make clean
