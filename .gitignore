@@ -5,5 +5,5 @@ TAGS
 doc
 pkg
 
-ext/antelope/antelope_spec.c
-ext/antelope/bin
+src/antelope/antelope_spec.c
+src/antelope/bin

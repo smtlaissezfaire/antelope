@@ -1,3 +1,3 @@
-[submodule "ext/antelope/dependencies/cspec"]
-	path = ext/antelope/dependencies/cspec
+[submodule "src/antelope/dependencies/cspec"]
+	path = src/antelope/dependencies/cspec
 	url = git://github.com/visionmedia/cspec.git
