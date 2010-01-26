@@ -21,6 +21,10 @@ end
 
 struct literal node_struct;
 
+int square_it(int x) {
+  return x * x;
+}
+
 describe "node struct"
   it "should have type as an integer"
     node_struct.type = 1;
@@ -48,6 +52,12 @@ describe "node struct"
 
     node_struct.references = references;
     node_struct.references should equal references;
+  end
+
+  it "should have a function"
+    node_struct.function = square_it;
+    int x = (*node_struct.function)(4);
+    x should equal 16
   end
 end
 

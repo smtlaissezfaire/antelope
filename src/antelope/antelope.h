@@ -13,4 +13,5 @@ struct literal {
   enum types     type;
   unsigned int * references;
   char *         text;
+  int            (*function)(int);
 };
