@@ -120,6 +120,11 @@ describe "mk_literal"
     int type = mk_literal(100, "foo").type;
     type should equal LITERAL
   end
+
+  it "should have the parse function as a pointer to literal_parse"
+    node rule = mk_literal(100, "foo");
+    rule.parse should equal parse_literal
+  end
 end
 
 unsigned int reference_list[2];
@@ -143,5 +148,10 @@ describe "mk_rule"
   it "should have a list of references"
     node rule = mk_rule(100, reference_list);
     rule.references should equal reference_list
+  end
+
+  it "should use the parse_rule function"
+    node rule = mk_rule(100, reference_list);
+    rule.parse should equal parse_rule
   end
 end

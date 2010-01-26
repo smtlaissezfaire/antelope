@@ -20,3 +20,6 @@ typedef struct node node;
 
 node mk_literal(int, char *);
 node mk_rule(int, unsigned int *);
+
+int parse_literal(int, char *);
+int parse_rule(int, char *);
