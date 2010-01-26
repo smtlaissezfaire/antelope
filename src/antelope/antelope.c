@@ -1,6 +1,6 @@
 #include "antelope.h"
 
-node mk_node(uint identifier, enum types type, int (*parse_func)(int, char *)) {
+node mk_node(uint identifier, enum types type, int (*parse_func)(int, string)) {
   node n;
   n.identifier = identifier;
   n.type       = type;
@@ -8,7 +8,7 @@ node mk_node(uint identifier, enum types type, int (*parse_func)(int, char *)) {
   return n;
 }
 
-node mk_literal(uint identifier, char * str) {
+node mk_literal(uint identifier, string str) {
   node n = mk_node(identifier, LITERAL, parse_literal);
   n.text = str;
   return n;
@@ -20,5 +20,5 @@ node mk_rule(uint identifier, uint * references) {
   return n;
 }
 
-int parse_literal(int start, char *str) {}
-int parse_rule(int start, char *str) {}
+int parse_literal(int start, string str) {}
+int parse_rule(int start, string str) {}

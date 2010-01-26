@@ -1,4 +1,5 @@
 typedef unsigned int uint;
+typedef char *       string;
 
 enum types {
   RULE = 1,
@@ -14,13 +15,13 @@ struct node {
   uint       identifier;
   enum types type;
   uint *     references;
-  char *     text;
-  int        (*parse)(int, char *);
+  string     text;
+  int        (*parse)(int, string);
 };
 
 typedef struct node node;
 
-node mk_literal   (uint, char *);
+node mk_literal   (uint, string);
 node mk_rule      (uint, unsigned int *);
-int parse_literal (int, char *);
-int parse_rule    (int, char *);
+int parse_literal (int, string);
+int parse_rule    (int, string);
