@@ -19,9 +19,10 @@ describe "basic specs"
   end
 end
 
-struct literal node_struct;
+struct node node_struct;
 
-int square_it(int x) {
+int generic_parse_function(int x, char * str) {
+  (void)(str);
   return x * x;
 }
 
@@ -54,9 +55,9 @@ describe "node struct"
     node_struct.references should equal references;
   end
 
-  it "should have a function"
-    node_struct.function = square_it;
-    int x = (*node_struct.function)(4);
+  it "should have the parse function"
+    node_struct.parse = generic_parse_function;
+    int x = (*node_struct.parse)(4, "");
     x should equal 16
   end
 end
@@ -95,5 +96,55 @@ describe "types"
   it "should have a repetition as type 7"
     enum types type = REPETITION;
     type should equal 7
+  end
+end
+
+describe "mk_literal"
+  it "should set the id"
+    int str = mk_literal(10, "foo").identifier;
+    str should equal 10
+  end
+
+  it "should use the correct id"
+    int str = mk_literal(100, "foo").identifier;
+    str should equal 100
+  end
+
+  it "should set the text"
+    char *txt_given = "foo";
+    char * text = mk_literal(100, txt_given).text;
+    text should equal txt_given
+  end
+
+  it "should have type = 2"
+    int type = mk_literal(100, "foo").type;
+    type should equal LITERAL
+  end
+end
+
+int reference_list[2];
+
+describe "mk_rule"
+  it "should have type = 1"
+    node rule = mk_rule(100, reference_list);
+    rule.type should equal RULE
+  end
+
+  it "should have the identifier"
+    node rule = mk_rule(100, reference_list);
+    rule.identifier should equal 100
+  end
+
+  it "should use the correct id"
+    node rule = mk_rule(200, reference_list);
+    rule.identifier should equal 200
+  end
+
+  it "should have a list of references"
+    reference_list[0] = 1;
+    reference_list[1] = 2;
+
+    node rule = mk_rule(100, (int *) &reference_list);
+    rule.references should equal reference_list
   end
 end

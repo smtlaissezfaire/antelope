@@ -8,10 +8,17 @@ enum types {
   REPETITION
 };
 
-struct literal {
+struct node {
   unsigned int   identifier;
   enum types     type;
   unsigned int * references;
   char *         text;
-  int            (*function)(int);
+  int            (*parse)(int, char *);
 };
+
+typedef struct node node;
+
+node mk_literal(int, char *);
+node mk_rule(int, int * references);
+
+int parse_literal(int, char *);
