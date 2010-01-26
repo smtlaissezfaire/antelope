@@ -122,7 +122,7 @@ describe "mk_literal"
   end
 end
 
-int reference_list[2];
+unsigned int reference_list[2];
 
 describe "mk_rule"
   it "should have type = 1"
@@ -141,10 +141,7 @@ describe "mk_rule"
   end
 
   it "should have a list of references"
-    reference_list[0] = 1;
-    reference_list[1] = 2;
-
-    node rule = mk_rule(100, (int *) &reference_list);
+    node rule = mk_rule(100, reference_list);
     rule.references should equal reference_list
   end
 end

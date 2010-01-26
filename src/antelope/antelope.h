@@ -19,6 +19,4 @@ struct node {
 typedef struct node node;
 
 node mk_literal(int, char *);
-node mk_rule(int, int * references);
-
-int parse_literal(int, char *);
+node mk_rule(int, unsigned int *);
