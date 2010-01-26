@@ -22,6 +22,6 @@ struct node {
 typedef struct node node;
 
 node mk_literal   (uint, string);
-node mk_rule      (uint, unsigned int *);
+node mk_rule      (uint, uint *);
 int parse_literal (int, string);
 int parse_rule    (int, string);
