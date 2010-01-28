@@ -26,9 +26,11 @@ struct node {
   int        (*parse)(node *, int, string);
 };
 
-node mk_literal   (uint, string);
-node mk_rule      (uint, uint *);
-int parse_literal (node *, int, string);
-int parse_rule    (node *, int, string);
+node mk_literal    (uint, string);
+node mk_rule       (uint, uint *);
+node mk_alternation(uint, uint *);
+int parse_literal    (node *, int, string);
+int parse_rule       (node *, int, string);
+int parse_alternation(node *, int, string);
 
 #endif

@@ -194,3 +194,10 @@ describe "mk_rule"
     rule.parse should equal parse_rule
   end
 end
+
+describe "mk_alternation"
+  it "should have type alternation"
+    node alternation = mk_alternation(0, reference_list);
+    alternation.type should equal ALTERNATION;
+  end
+end

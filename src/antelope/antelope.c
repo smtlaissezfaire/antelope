@@ -20,6 +20,11 @@ node mk_rule(uint identifier, uint *references) {
   return n;
 }
 
+node mk_alternation(uint identifier, uint *references) {
+  node n = mk_node(identifier, ALTERNATION, parse_rule);
+  return n;
+}
+
 int parse_literal(node *self, int start, string str) {
   int match_length = strlen(self->text);
 
@@ -31,3 +36,4 @@ int parse_literal(node *self, int start, string str) {
 }
 
 int parse_rule(node * self, int start, string str) {}
+int parse_alternation(node *self, int start, string str) {}
