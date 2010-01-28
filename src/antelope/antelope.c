@@ -26,7 +26,7 @@ int parse_literal(node *self, int start, string str) {
   if (memcmp(str + start, self->text, match_length) == 0) {
     return start + match_length;
   } else {
-    return -1;
+    return PARSE_FAILURE;
   }
 }
 

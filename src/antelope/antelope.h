@@ -1,5 +1,7 @@
 #include <string.h>
 
+#define PARSE_FAILURE -1
+
 typedef unsigned int uint;
 typedef char *       string;
 
