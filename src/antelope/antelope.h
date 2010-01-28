@@ -1,6 +1,8 @@
-#include <string.h>
+#ifndef _ANTELOPE_H_
+#define _ANTELOPE_H_
 
-#define PARSE_FAILURE -1
+#include <string.h>
+#define  PARSE_FAILURE -1
 
 typedef unsigned int uint;
 typedef char *       string;
@@ -28,3 +30,5 @@ node mk_literal   (uint, string);
 node mk_rule      (uint, uint *);
 int parse_literal (node *, int, string);
 int parse_rule    (node *, int, string);
+
+#endif
