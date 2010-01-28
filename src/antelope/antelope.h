@@ -4,6 +4,7 @@
 
 typedef unsigned int uint;
 typedef char *       string;
+typedef struct node  node;
 
 enum types {
   RULE = 1,
@@ -20,10 +21,8 @@ struct node {
   enum types type;
   uint *     references;
   string     text;
-  int        (*parse)(struct node *, int, string);
+  int        (*parse)(node *, int, string);
 };
-
-typedef struct node node;
 
 node mk_literal   (uint, string);
 node mk_rule      (uint, uint *);
