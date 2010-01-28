@@ -21,7 +21,8 @@ end
 
 struct node node_struct;
 
-int generic_parse_function(int x, char * str) {
+int generic_parse_function(node * self, int x, char * str) {
+  (void)self;
   (void)(str);
   return x * x;
 }
@@ -57,7 +58,7 @@ describe "node struct"
 
   it "should have the parse function"
     node_struct.parse = generic_parse_function;
-    int x = (*node_struct.parse)(4, "");
+    int x = (*node_struct.parse)(&node_struct, 4, "");
     x should equal 16
   end
 end

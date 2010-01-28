@@ -16,12 +16,12 @@ struct node {
   enum types type;
   uint *     references;
   string     text;
-  int        (*parse)(int, string);
+  int        (*parse)(struct node *, int, string);
 };
 
 typedef struct node node;
 
 node mk_literal   (uint, string);
 node mk_rule      (uint, uint *);
-int parse_literal (int, string);
-int parse_rule    (int, string);
+int parse_literal (node *, int, string);
+int parse_rule    (node *, int, string);
