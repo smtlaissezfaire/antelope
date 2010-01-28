@@ -20,5 +20,14 @@ node mk_rule(uint identifier, uint *references) {
   return n;
 }
 
-int parse_literal(node * self, int start, string str) {}
+int parse_literal(node *self, int start, string str) {
+  int match_length = strlen(self->text);
+
+  if (memcmp(str + start, self->text, match_length) == 0) {
+    return start + match_length;
+  } else {
+    return -1;
+  }
+}
+
 int parse_rule(node * self, int start, string str) {}

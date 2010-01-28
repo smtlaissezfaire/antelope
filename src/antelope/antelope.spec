@@ -113,7 +113,7 @@ describe "mk_literal"
 
   it "should set the text"
     char *txt_given = "foo";
-    char * text = mk_literal(100, txt_given).text;
+    char *text = mk_literal(100, txt_given).text;
     text should equal txt_given
   end
 
@@ -125,6 +125,44 @@ describe "mk_literal"
   it "should have the parse function as a pointer to literal_parse"
     node rule = mk_literal(100, "foo");
     rule.parse should equal parse_literal
+  end
+end
+
+describe "parsing a literal"
+  it "should return -1 if it doesn't match"
+    node literal = mk_literal(0, "foo");
+    int result = literal.parse(&literal, 0, "not_matching");
+    result should equal -1
+  end
+
+  it "should return +1 when matching one char exactly"
+    node literal = mk_literal(0, "a");
+    int result = literal.parse(&literal, 0, "a");
+    result should equal 1
+  end
+
+  it "should return +2 when matching two chars exactly"
+    node literal = mk_literal(0, "ab");
+    int result = literal.parse(&literal, 0, "ab");
+    result should equal 2
+  end
+
+  it "should return a parse failure if it matches the first char, but not the second"
+    node literal = mk_literal(0, "aa");
+    int result = literal.parse(&literal, 0, "ab");
+    result should equal -1
+  end
+
+  it "should match starting at the offset"
+    node literal = mk_literal(0, "bar");
+    int result = literal.parse(&literal, 3, "foobar");
+    result should equal 6
+  end
+
+  it "should match in the middle & return the correct offset"
+    node literal = mk_literal(0, "bar");
+    int result = literal.parse(&literal, 3, "foobarbaz");
+    result should equal 6
   end
 end
 

@@ -1,3 +1,5 @@
+#include <string.h>
+
 typedef unsigned int uint;
 typedef char *       string;
 
