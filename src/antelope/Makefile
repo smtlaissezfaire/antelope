@@ -1,5 +1,5 @@
 CC                = gcc
-CFLAGS            = -std=c99 -W -Wall
+CFLAGS            = -std=c99 -W -Wall -pedantic
 BIN_DIR           = bin
 BIN_FILE          = $(BIN_DIR)/antelope
 SOURCE_FILES      = antelope.c
