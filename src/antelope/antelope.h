@@ -4,9 +4,10 @@
 #include <string.h>
 #define  PARSE_FAILURE -1
 
-typedef unsigned int uint;
-typedef char *       string;
-typedef struct node  node;
+typedef unsigned int     uint;
+typedef char *           string;
+typedef struct node      node;
+typedef struct entry     entry;
 
 enum types {
   RULE = 1,
@@ -24,6 +25,12 @@ struct node {
   uint *     references;
   string     text;
   int        (*parse)(node *, int, string);
+};
+
+struct entry {
+  int key;
+  void *value;
+  entry *next;
 };
 
 node mk_literal    (uint, string);

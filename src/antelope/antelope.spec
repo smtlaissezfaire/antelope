@@ -201,3 +201,30 @@ describe "mk_alternation"
     alternation.type should equal ALTERNATION;
   end
 end
+
+describe "entry"
+  it "should have an key"
+    entry node;
+    node.key = 1234;
+    node.key should equal 1234;
+  end
+
+  it "should have a value"
+    node n;
+
+    entry e;
+    e.value = &n;
+    e.value should equal &n;
+  end
+
+  it "should have a next value as null"
+    entry e1;
+    entry e2;
+    entry *ptr;
+
+    e1.next = &e2;
+    ptr = e1.next;
+
+    ptr should equal &e2;
+  end
+end
