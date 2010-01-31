@@ -8,7 +8,6 @@
 typedef unsigned int     uint;
 typedef char *           string;
 typedef struct node      node;
-typedef struct entry     entry;
 typedef struct node_set* node_set;
 
 enum types {
@@ -27,12 +26,6 @@ struct node {
   uint *     references;
   string     text;
   int        (*parse)(node *, int, string);
-};
-
-struct entry {
-  int key;
-  void *value;
-  entry *next;
 };
 
 struct node_set {
