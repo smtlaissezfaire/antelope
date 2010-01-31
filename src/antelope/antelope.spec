@@ -228,3 +228,82 @@ describe "entry"
     ptr should equal &e2;
   end
 end
+
+describe "adding nodes"
+  it "should add the first node"
+    node_set set = malloc(sizeof(node_set));
+    node n1;
+    node *value;
+
+    add_node(set, &n1);
+    value = set->node;
+
+    value should equal &n1
+  end
+
+  it "should add the second node as the second value"
+    node_set set = malloc(sizeof(node_set) * 2);
+    node n1;
+    node n2;
+    node *value;
+
+    add_node(set, &n1);
+    add_node(set, &n2);
+    value = set->next->node;
+
+    value should equal &n2
+  end
+end
+
+describe "node set"
+  it "should return 0 if the set doesn't have a first node"
+    node_set set = malloc(sizeof(node_set));
+
+    find_node(set, 1) should equal 0
+  end
+
+  it "should return the node when it matches"
+    node_set set = malloc(sizeof(node_set));
+    node n1;
+
+    n1.identifier = 1;
+    add_node(set, &n1);
+
+    find_node(set, 1) should equal &n1;
+  end
+
+  it "should return 0 if it the node has one element, but doesn't match"
+    node_set set = malloc(sizeof(node_set));
+    node n1;
+
+    n1.identifier = 2;
+    add_node(set, &n1);
+
+    find_node(set, 1) should equal 0
+  end
+
+  it "should use the correct id"
+    node_set set = malloc(sizeof(node_set));
+    node n1;
+
+    n1.identifier = 1;
+    add_node(set, &n1);
+
+    find_node(set, 2) should equal 0
+  end
+
+  it "should match the correct nodes"
+    node_set set = malloc(sizeof(node_set));
+    node n1;
+    node n2;
+
+    n1.identifier = 1;
+    n2.identifier = 2;
+
+    add_node(set, &n1);
+    add_node(set, &n2);
+
+    find_node(set, 1) should equal &n1;
+    find_node(set, 2) should equal &n2;
+  end
+end

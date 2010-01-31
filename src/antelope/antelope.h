@@ -8,6 +8,7 @@ typedef unsigned int     uint;
 typedef char *           string;
 typedef struct node      node;
 typedef struct entry     entry;
+typedef struct node_set* node_set;
 
 enum types {
   RULE = 1,
@@ -32,6 +33,14 @@ struct entry {
   void *value;
   entry *next;
 };
+
+struct node_set {
+  node    *node;
+  node_set next;
+};
+
+void add_node(node_set, node *);
+node *find_node(node_set, int);
 
 node mk_literal    (uint, string);
 node mk_rule       (uint, uint *);

@@ -37,3 +37,27 @@ int parse_literal(node *self, int start, string str) {
 
 int parse_rule(node * self, int start, string str) {}
 int parse_alternation(node *self, int start, string str) {}
+
+void add_node(node_set set, node * n) {
+  if (set->node) {
+    node_set new_element = malloc(sizeof(node_set));
+    set->next = new_element;
+    add_node(new_element, n);
+  } else {
+    set->node = n;
+  }
+}
+
+node *find_node(node_set set, int id) {
+  node_set current_set = set;
+
+  do {
+    if (current_set->node) {
+      if (current_set->node->identifier == id) {
+        return current_set->node;
+      }
+    }
+  } while (current_set = current_set->next);
+
+  return 0;
+}
