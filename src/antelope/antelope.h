@@ -1,6 +1,7 @@
 #ifndef _ANTELOPE_H_
 #define _ANTELOPE_H_
 
+#include <stdlib.h>
 #include <string.h>
 #define  PARSE_FAILURE -1
 
